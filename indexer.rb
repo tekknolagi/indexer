@@ -18,6 +18,9 @@ configure do
       File.delete db_name
     end
     pubdir = File.join('public', $upload_dir)
+    unless File.directory? 'public'
+      Dir.mkdir('public')
+    end
     if File.directory? pubdir
       Dir.foreach(pubdir) {|f|
         fn = File.join(pubdir,f)
