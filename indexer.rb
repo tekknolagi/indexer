@@ -12,6 +12,7 @@ configure do
   $torrent_table = "torrents"
   $tag_table = "tags"
   $map_table = "tagmap"
+  $allowed_exts = [".torrent"]
 
   if ARGV[0] == "create"
     if File.exists? db_name
@@ -137,7 +138,8 @@ end
 post '/' do
   if params['file']
     @fn = build_fn(params['file'][:filename])
-    if ext == '.torrent'
+    ext = File.extname(@fn)
+    if $allowed_exts.include? ext
       insert_torrent(@fn)
       tags = split_input(params['tags'])
       add_tags(tags)
