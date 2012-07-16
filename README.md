@@ -13,5 +13,5 @@ Requirements:
 
 Usage:
 
-* To create the db and file folder, run `ruby track.rb create`
-* To simply start the server, run `ruby track.rb`
+* To create the db and file folder, run `ruby indexer.rb create`
+* To simply start the server, run `ruby indexer.rb`
