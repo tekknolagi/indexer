@@ -14,4 +14,4 @@ Requirements:
 Usage:
 
 * To create the db and file folder, run `ruby indexer.rb create`
-* To simply start the server, run `ruby indexer.rb`
+* To start the server, run `ruby indexer.rb`
