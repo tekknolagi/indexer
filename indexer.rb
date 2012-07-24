@@ -6,36 +6,6 @@ require 'bencode'
 require 'base32'
 require 'rack/utils'
 require 'cgi'
-require 'sinatra/reloader'
-
-configure do
-  set :port, 8080
-  set :environment, :production
-
-  $upload_dir = 'i'
-  db_name = "torrents.db"
-  $torrent_table = "torrents"
-  $tag_table = "tags"
-  $map_table = "tagmap"
-  $allowed_exts = [".torrent"]
-
-  $pubdir = File.join('public', $upload_dir)
-  unless File.directory? 'public'
-    Dir.mkdir('public')
-  end
-  unless File.directory? $pubdir
-    Dir.mkdir($pubdir)
-  end
-
-  unless File.exists? db_name
-    $db = SQLite3::Database.new(db_name)
-    $db.execute("create table #{$torrent_table} (url text, name text, magnet text)")
-    $db.execute("create table #{$tag_table} (tag text)")
-    $db.execute("create table #{$map_table} (tag int, url int)")
-  else
-    $db = SQLite3::Database.new(db_name)
-  end
-end
 
 def randomize(hash)
   a = 0
@@ -208,11 +178,14 @@ __END__
   File: <br><input type='file' name='file' /><br>
   Tags: <br><input type='text' name='tags' /><br>
   <input type='submit' value='Upload' />
+<!--<div style="display:inline;height:100%;width:1px;border:1px inset;margin:5px"></div>-->
 </form>
 <hr><br>
 <form method='GET' action='/search'>
 Search by tag: <br><input type='text' name='search' />
 </form>
+<hr><br>
+Source on <a href='http://github.com/tekknolagi/indexer' target='_blank'>GitHub</a>
 
 @@ upload
 <title>Uploaded!</title>
@@ -222,6 +195,8 @@ Search by tag: <br><input type='text' name='search' />
 
 @@ list
 <title>Search Results</title>
+<a href='/'>Back</a>
+<br><br>
 <table>
 <tr><td>torrent</td><td>magnet</td></tr>
 <% if @urls.length > 0 %>
@@ -235,7 +210,11 @@ Search by tag: <br><input type='text' name='search' />
 <tr><td>No torrents match.</td></tr>
 <% end %>
 </table>
+<br><hr><br>
+Source on <a href='http://github.com/tekknolagi/indexer' target='_blank'>GitHub</a>
 
 @@ error
 <title>Error!</title>
+<a href='/'>Back</a>
+<br><br>
 <b>Error:</b> <%= @error %>
