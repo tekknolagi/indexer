@@ -211,11 +211,13 @@ __END__
 </form>
 <hr><br>
 <form method='GET' action='/search'>
-Search: <input type='text' name='search' />
+Search by tag: <br><input type='text' name='search' />
 </form>
 
 @@ upload
 <title>Uploaded!</title>
+<a href='/'>Back</a>
+<br><br>
 <a href='<%= File.join($upload_dir, @fn) %>'><%= @fn %></a>
 
 @@ list
