@@ -10,8 +10,12 @@ Requirements:
   * sinatra
   * sqlite3
   * erb
+  * bencode
+  * base32
+  * rack
+  * cgi
+  * sinatra-contrib
 
 Usage:
 
-* To create the db and file folder, run `ruby indexer.rb create`
-* To start the server, run `ruby indexer.rb`
+* To start the server (and create all necessary files and folders), run `ruby indexer.rb`

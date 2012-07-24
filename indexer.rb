@@ -2,11 +2,16 @@ require 'rubygems'
 require 'sinatra'
 require 'sqlite3'
 require 'erb'
-
+require 'bencode'
+require 'base32'
+require 'rack/utils'
+require 'cgi'
+require 'sinatra/reloader'
 
 configure do
   set :port, 8080
   set :environment, :production
+
   $upload_dir = 'i'
   db_name = "torrents.db"
   $torrent_table = "torrents"
@@ -14,30 +19,22 @@ configure do
   $map_table = "tagmap"
   $allowed_exts = [".torrent"]
 
-  if ARGV[0] == "create"
-    if File.exists? db_name
-      File.delete db_name
-    end
-    pubdir = File.join('public', $upload_dir)
-    unless File.directory? 'public'
-      Dir.mkdir('public')
-    end
-    if File.directory? pubdir
-      Dir.foreach(pubdir) {|f|
-        fn = File.join(pubdir,f)
-        File.delete(fn) if !File.directory?(fn)
-      }
-    else
-      Dir.mkdir(pubdir)
-    end
-    db = SQLite3::Database.new(db_name)
-    db.execute("create table #{$torrent_table} (url text)")
-    db.execute("create table #{$tag_table} (tag text)")
-    db.execute("create table #{$map_table} (tag int, url int)")
-    exit
+  $pubdir = File.join('public', $upload_dir)
+  unless File.directory? 'public'
+    Dir.mkdir('public')
+  end
+  unless File.directory? $pubdir
+    Dir.mkdir($pubdir)
   end
 
-  $db = SQLite3::Database.new(db_name)  
+  unless File.exists? db_name
+    $db = SQLite3::Database.new(db_name)
+    $db.execute("create table #{$torrent_table} (url text, name text, magnet text)")
+    $db.execute("create table #{$tag_table} (tag text)")
+    $db.execute("create table #{$map_table} (tag int, url int)")
+  else
+    $db = SQLite3::Database.new(db_name)
+  end
 end
 
 def randomize(hash)
@@ -79,8 +76,8 @@ def add_tags(list)
   }
 end
 
-def insert_torrent(fn)
-  $db.execute("insert into #{$torrent_table} values ( ? )", fn)
+def insert_torrent(fn, name, magnetlink)
+  $db.execute("insert into #{$torrent_table} values ( ?, ?, ? )", fn, name, magnetlink)
 end
 
 def save_torrent(fn, tmp)
@@ -127,9 +124,36 @@ def urls_from_tag_ids(tag_ids)
   urls = []
   url_ids = $db.execute("select url, count(*) num from #{$map_table} where tag in #{build_arr(tag_ids)} group by url having num = #{tag_ids.length}")
   url_ids.flatten.each {|url_id|
-    urls.push($db.execute("select url from #{$torrent_table} where oid = ?", url_id));
+    a = $db.execute("select url,name,magnet from #{$torrent_table} where oid = ?", url_id).flatten
+    torrent = {
+      :url => a[0],
+      :name => a[1],
+      :magnet => a[2]
+    }
+    urls.push(torrent)
   }
-  return urls.flatten.uniq
+  return urls.uniq
+end
+
+def build_magnet_uri(fn)
+  torrent = BEncode.load_file(fn)
+  sha1 = OpenSSL::Digest::SHA1.digest(torrent['info'].bencode)
+  p = {
+    :xt => "urn:btih:" << Base32.encode(sha1),
+    :dn => CGI.escape(torrent["info"]["name"])
+  }
+  Array(torrent["announce-list"]).each do |(tracker, _)|
+    p[:tr] ||= []
+    p[:tr] << tracker
+  end
+  magnet_uri  = "magnet:?xt=#{p.delete(:xt)}"
+  magnet_uri << "&" << Rack::Utils.build_query(p)
+  return magnet_uri
+end
+
+def get_torrent_name(fn)
+  file = BEncode.load_file(fn)
+  return file['info']['name']
 end
 
 get '/' do
@@ -141,11 +165,13 @@ post '/' do
     @fn = build_fn(params['file'][:filename])
     ext = File.extname(@fn)
     if $allowed_exts.include? ext
-      insert_torrent(@fn)
+      save_torrent(@fn, params['file'][:tempfile])
+      name = get_torrent_name(File.join($pubdir,@fn))
+      magnetlink = build_magnet_uri(File.join($pubdir, @fn))
+      insert_torrent(@fn, name, magnetlink)
       tags = split_input(params['tags'])
       add_tags(tags)
       map_tags_to_torrents(tags, @fn)
-      save_torrent(@fn, params['file'][:tempfile])
       erb :upload
     else
       @error = "Bad file type '#{ext}'"
@@ -194,11 +220,19 @@ Search: <input type='text' name='search' />
 
 @@ list
 <title>Search Results</title>
-<ol>
+<table>
+<tr><td>torrent</td><td>magnet</td></tr>
+<% if @urls.length > 0 %>
 <% @urls.each {|url| %>
-<li><a href='<%= "#{$upload_dir}/#{url}" %>'><%= url %></a></li>
+<tr>
+<td><a href='<%= "#{$upload_dir}/#{url[:url]}" %>'><%= url[:name] %></a></td>
+<td><a href='<%= url[:magnet] %>'>magnet</a></td>
+</tr>
 <% } %>
-</ol>
+<% else %>
+<tr><td>No torrents match.</td></tr>
+<% end %>
+</table>
 
 @@ error
 <title>Error!</title>
