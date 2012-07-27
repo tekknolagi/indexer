@@ -1,12 +1,3 @@
-require 'rubygems'
-require 'sinatra'
-require 'sqlite3'
-require 'erb'
-require 'bencode'
-require 'base32'
-require 'rack/utils'
-require 'cgi'
-
 def randomize(hash)
   a = 0
   hash[:len] ||= 10

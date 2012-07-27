@@ -1,3 +1,11 @@
+require 'rubygems'
+require 'sinatra'
+require 'sqlite3'
+require 'erb'
+require 'bencode'
+require 'base32'
+require 'rack/utils'
+require 'cgi'
 require './indexer.rb'
 
 set :environment, :production
