@@ -3,6 +3,8 @@ GEM
   specs:
     base32 (0.2.0)
     bencode (0.7.0)
+    daemons (1.1.8)
+    eventmachine (0.12.10)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -11,6 +13,10 @@ GEM
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     sqlite3 (1.3.6)
+    thin (1.4.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     tilt (1.3.3)
 
 PLATFORMS
@@ -19,5 +25,7 @@ PLATFORMS
 DEPENDENCIES
   base32
   bencode
+  rack
   sinatra
   sqlite3
+  thin
