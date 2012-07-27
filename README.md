@@ -7,15 +7,11 @@ It's pretty simple.
 Requirements:
 
 * rubygems
-  * sinatra
-  * sqlite3
-  * erb
-  * bencode
-  * base32
-  * rack
-  * cgi
-  * sinatra-contrib
+  * bundler
+
+Then just run `bundle install`
 
 Usage:
 
-* To start the server (and create all necessary files and folders), run `ruby indexer.rb`
+* To start the server (and create all necessary files and folders), run:	
+    `rackup -o 0.0.0.0 -p 3000`
