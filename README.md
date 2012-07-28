@@ -1,5 +1,5 @@
 ========
-Indexer
+Installation
 ========
 
 It's pretty simple.
