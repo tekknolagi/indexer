@@ -1,0 +1,13 @@
+---
+applications:
+  .:
+    name: rubytorrent
+    framework:
+      name: rack
+      info:
+        mem: 128M
+        description: Rack Application
+        exec: 
+    url: ${name}.${target-base}
+    mem: 2G
+    instances: 1

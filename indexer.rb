@@ -123,16 +123,16 @@ end
 
 post '/' do
   if params['file']
-    @fn = build_fn(params['file'][:filename])
-    ext = File.extname(@fn)
+    @url = build_fn(params['file'][:filename])
+    ext = File.extname(@url)
     if $allowed_exts.include? ext
-      save_torrent(@fn, params['file'][:tempfile])
-      name = get_torrent_name(File.join($pubdir,@fn))
-      magnetlink = build_magnet_uri(File.join($pubdir, @fn))
-      insert_torrent(@fn, name, magnetlink)
+      save_torrent(@url, params['file'][:tempfile])
+      name = get_torrent_name(File.join($pubdir,@url))
+      magnetlink = build_magnet_uri(File.join($pubdir, @url))
+      insert_torrent(@url, name, magnetlink)
       tags = split_input(params['tags'])
       add_tags(tags)
-      map_tags_to_torrents(tags, @fn)
+      map_tags_to_torrents(tags, @url)
       erb :upload
     else
       @error = "Bad file type '#{ext}'"
