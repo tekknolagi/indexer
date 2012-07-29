@@ -33,8 +33,8 @@ Project Specification
 
 ##Specific requirements:
 
-### The project may grow to use one of several databases for the backend, such as MySQL, PostgreSQL, SQLite, or MongoDB.
-#### The current table layout is below. Naturally, this mapping can be easily extended.
+* The project may grow to use one of several databases for the backend, such as MySQL, PostgreSQL, SQLite, or MongoDB.
+* The current table layout is below. Naturally, this mapping can be easily extended.
 <pre>
 +-----------------------------------------------------------------------------------------------------------------------+
 |                                                      torrents                                                         |
