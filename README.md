@@ -66,7 +66,7 @@ Project Specification
 </pre>
 <pre>
 +-----------------+
-|      tagmap     |
+|        map      |
 +-----+-----+-----+
 | oid | tag | url |
 +-----+-----+-----+

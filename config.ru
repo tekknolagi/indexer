@@ -17,7 +17,7 @@ $upload_dir = 'i'
 db_name = "torrents.db"
 $torrent_table = "torrents"
 $tag_table = "tags"
-$map_table = "tagmap"
+$map_table = "map"
 $allowed_exts = [".torrent"]
 
 $pubdir = File.join('public', $upload_dir)
