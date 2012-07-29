@@ -17,53 +17,26 @@ Project Specification
 * The current table layout is below. Naturally, this mapping can be easily extended.
 
 <pre>
-+---------------------------------------------------------------------------------------------------------------------+
-|                                                      torrents                                                       |
-+-----+----------------------------------------------------------+----------------------------------------------------+
-| oid |                    name (text)                           |                   url (text)                       |
-+-----+----------------------------------------------------------+----------------------------------------------------+
-|   1 | Fuduntu-2012.3-i686-LiveDVD.iso                          | Fuduntu-2012.3-i686-3671410625.torrent             |
-|   2 | David.Arnold-Michael.Price-Sherlock-Series.One.2012.FLAC | Sherlock-Series-One-Soundtrack-(2012)-FLAC.torrent |
-+-----+----------------------------------------------------------+----------------------------------------------------+
+Table: torrents
+Column 1: oid, INT
+Column 2: url, TEXT
+Column 3: torrent, TEXT
+Column 4: magnet, TEXT
 
+Table: tags
+Column 1: oid, INT
+Column 2: tag, TEXT
 
-+------------------+
-|       tags       |
-+-----+------------+
-| oid | tag (text) |
-+-----+------------+
-|   1 | fuduntu    |
-|   2 | os         |
-|   3 | linux      |
-|   4 | ubuntu     |
-|   5 | david      |
-|   6 | arnold     |
-|   7 | michael    |
-|   8 | price      |
-|   9 | soundtrack |
-|  10 | sherlock   |
-|  11 | bbc        |
-+-----+------------+
-
-
-+-----------------------------+
-|                map          |
-+-----+-----+-----+-----------+
-| oid | tag (int) | url (int) |
-+-----+-----------+-----------+
-|   1 |   1       |   1       |
-|   2 |   2       |   1       |
-|   3 |   3       |   1       |
-|   4 |   4       |   1       |
-|   5 |   5       |   2       |
-|   6 |   6       |   2       |
-|   7 |   7       |   2       |
-|   8 |   8       |   2       |
-|   9 |   9       |   2       |
-|  10 |  10       |   2       |
-|  11 |  11       |   2       |
-+-----+-----------+-----------+
+Table: map
+Column 1: oid, INT
+Column 2: tag, INT
+Column 3: url, INT
 </pre>
+
+Accessing a list of tags associated to a particular torrent would have the syntax:
+<pre>FROM map SELECT tag WHERE url = '[torrent url]'</pre>
+And vice-versa would be:
+<pre>FROM map SELECT url WHERE tag = '[tag]'</pre>
 
 ## Abstract Module API Specification:
 
