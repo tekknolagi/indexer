@@ -8,7 +8,7 @@ require 'rack/utils'
 require 'cgi'
 require './indexer.rb'
 
-set :environment, :production
+set :environment, :development
 set :port, 8080
 set :app_file, 'indexer.rb'
 disable :run

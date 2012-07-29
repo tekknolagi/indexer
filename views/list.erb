@@ -1,0 +1,18 @@
+<title>Search Results</title>
+<a href='/'>Back</a>
+<br><br>
+<table>
+<tr><td>torrent</td><td>magnet</td></tr>
+<% if @urls.length > 0 %>
+<% @urls.each {|url| %>
+<tr>
+<td><a href='<%= "#{$upload_dir}/#{url[:url]}" %>'><%= url[:name] %></a></td>
+<td><a href='<%= url[:magnet] %>'>magnet</a></td>
+</tr>
+<% } %>
+<% else %>
+<tr><td>No torrents match.</td></tr>
+<% end %>
+</table>
+<br><hr><br>
+Source on <a href='http://github.com/tekknolagi/indexer' target='_blank'>GitHub</a>
