@@ -44,7 +44,8 @@ Project Specification
 |   1 | Fuduntu-2012.3-i686-LiveDVD.iso                          | Fuduntu-2012.3-i686_3671410625.torrent               |
 |   2 | David.Arnold-Michael.Price_Sherlock-Series.One.2012.FLAC | Sherlock_Series_One_-_Soundtrack_(2012)_FLAC.torrent |
 +-----+----------------------------------------------------------+------------------------------------------------------+
-
+</pre>
+<pre>
 +------------------+
 |       tags       |
 +-----+------------+
@@ -62,7 +63,8 @@ Project Specification
 |  10 | sherlock   |
 |  11 | bbc        |
 +-----+------------+
-
+</pre>
+<pre>
 +-----------------+
 |      tagmap     |
 +-----+-----+-----+
