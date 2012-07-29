@@ -9,6 +9,7 @@ Project Specification
    * Clean. Visual appeal in the source code is a must.
    * Efficient. This must have a small footprint.
    * Self-documenting. It must be readable enough that it needs no comments. Function and variable names must be clear.
+     * Comment anyway. It's good practice.
    * Modular. Each function should be as small as possible, drawing on features from other functions. Building blocks.
    * In line with the general "feel" of the rest of the project.
 * Functionality should be generally in line with the community's needs.
