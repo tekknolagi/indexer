@@ -30,7 +30,7 @@ end
 
 unless File.exists? db_name
   $db = SQLite3::Database.new(db_name)
-  $db.execute("create table #{$torrent_table} (url text, name text, magnet text)")
+  $db.execute("create table #{$torrent_table} (url text, name text, magnet text, date text)")
   $db.execute("create table #{$tag_table} (tag text)")
   $db.execute("create table #{$map_table} (tag int, url int)")
 else

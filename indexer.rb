@@ -38,7 +38,7 @@ def add_tags(list)
 end
 
 def insert_torrent(fn, name, magnetlink)
-  $db.execute("insert into #{$torrent_table} values ( ?, ?, ? )", fn, name, magnetlink)
+  $db.execute("insert into #{$torrent_table} values ( ?, ?, ?, ? )", fn, name, magnetlink, Time.now.to_i)
 end
 
 def save_torrent(fn, tmp)
@@ -54,6 +54,11 @@ end
 def torrent_id_by_url(url)
   res = $db.execute("select oid from #{$torrent_table} where url = ?", url)
   return res[0][0]
+end
+
+def latest_torrents(how_many=20)
+  res = $db.execute("select * from #{$torrent_table} order by date desc limit 0, ?", how_many)
+  return res
 end
 
 def make_tag_assoc(tag_id, torrent_id)
@@ -159,4 +164,20 @@ get '/search' do
     @error = "No search query parameter passed."
     erb :error
   end
+end
+
+get '/new' do
+  @urls = []
+  latest_torrents.each do |torrent|
+    t = {
+      :name => torrent[0],
+      :url => torrent[1],
+      :magnet => torrent[2],
+      :date => torrent[3]
+    }
+    @urls.push(t)
+  end
+  @upload_dir = $upload_dir
+  @links = erb :links
+  erb :list
 end
