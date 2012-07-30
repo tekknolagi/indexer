@@ -178,6 +178,5 @@ get '/new' do
     @urls.push(t)
   end
   @upload_dir = $upload_dir
-  @links = erb :links
   erb :list
 end
