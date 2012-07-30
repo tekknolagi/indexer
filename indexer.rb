@@ -8,7 +8,8 @@ require 'cgi'
 
 configure do
   set :environment, :development
-  set :port, 8080
+  set :host, "torrent.hypeno.de"
+  set :port, "3000"
   
   $upload_dir = 'i'
   $db_name = "torrents"
@@ -38,15 +39,15 @@ configure do
       $db = SQLite3::Database.new(db_name)
     end
   end
-
+  
   def mongo_setup
     require 'mongo'
     $mongo = true
     conn = Mongo::Connection.new
-    db = conn.db($db_name)
-    $torrent = db[$torrent_table]
-    $tag = db[$tag_table]
-    $map = db[$map_table]
+    $db = conn.db($db_name)
+    $torrent = $db[$torrent_table]
+    $tag = $db[$tag_table]
+    $map = $db[$map_table]
   end
   
   $sql = ARGV.first
@@ -84,7 +85,7 @@ def tag_exists?(tag)
   if $sqlite
     list = $db.execute("select * from #{$tag_table} where tag = ?", tag)
   elsif $mongo
-    list = $tag.find(:tag => tag).to_a
+    list = $tag.find({:tag => tag}).to_a
   end
   return list.length > 0
 end
@@ -98,12 +99,9 @@ def add_tag(tag)
     return id[0]
   elsif $mongo
     unless tag_exists? tag
-      id = $tag.insert(:tag => tag).to_a[:_id]
+      $tag.insert({:tag => tag})
     end
-    unless id
-      id = $tag.find(:tag => tag).to_a[:_id]
-    end
-    return id
+    return $tag.find({:tag => tag})[:_id]
   end
 end
 
@@ -117,7 +115,7 @@ def insert_torrent(url, name, magnet)
   if $sqlite
     $db.execute("insert into #{$torrent_table} values ( ?, ?, ?, ? )", url, name, magnet, Time.now.to_i)
   elsif $mongo
-    $torrent.insert({url: url, name: name, magnet: magnet, date: Time.now.to_i})
+    $torrent.insert({:url => url, :name => name, :magnet => magnet, :date => Time.now.to_i})
   end
 end
 
@@ -131,7 +129,9 @@ def tag_id_by_name(tag)
   if $sqlite
     return $db.execute("select oid from #{$tag_table} where tag = ?", tag)
   elsif $mongo
-    return $tag.find({tag: tag}).to_a[:_id]
+    taga = $tag.find({:tag => tag})
+#    puts taga.inspect
+    return taga
   end
 end
 
@@ -140,7 +140,7 @@ def torrent_id_by_url(url)
     res = $db.execute("select oid from #{$torrent_table} where url = ?", url)
     return res[0][0]
   elsif $mongo
-    return $torrent.find({url: url}).to_a[:_id]
+    return $torrent.find({:url => url}).to_a[:_id]
   end
 end
 
@@ -156,7 +156,7 @@ def make_tag_assoc(tag_id, torrent_id)
   if $sqlite
     $db.execute("insert into #{$map_table} values ( ?, ? )", tag_id, torrent_id)
   elsif $mongo
-    $map.insert({tag: tag_id, torrent: torrent_id})
+    $map.insert({:tag => tag_id, :torrent => torrent_id})
   end
 end
 
@@ -196,9 +196,9 @@ def urls_from_tag_ids(tag_ids)
       torrents.push(torrent)
     end
   elsif $mongo
-    torrent_ids = $map.find({tag: {$in: tag_ids}}).to_a
+    torrent_ids = $map.find({:tag => {:$in => tag_ids}}).to_a
     torrent_ids.each do |torrent_id|
-      a = $torrent.find(_id: torrent_id).to_a
+      a = $torrent.find(:_id => torrent_id).to_a
       torrents.push(torrent)
     end
   end
