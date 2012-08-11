@@ -12,16 +12,6 @@ def sqlite_setup
   end
 end
 
-def mongo_setup
-  require 'mongo'
-  $mongo = true
-  conn = Mongo::Connection.new
-  $db = conn.db($db_name)
-  $torrent = $db[$torrent_table]
-  $tag = $db[$tag_table]
-  #    $map = $db[$map_table]
-end
-
 configure do
   set :environment, :development
   set :host, "torrent.hypeno.de"
@@ -43,9 +33,7 @@ configure do
   end
   
   $sql = ARGV.first
-  if $sql == 'mongo'
-    mongo_setup
-  elsif $sql == 'sqlite'
+  if $sql == 'sqlite'
     sqlite_setup
   else
     $sql = 'sqlite'

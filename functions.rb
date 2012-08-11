@@ -19,28 +19,16 @@ def split_input(input)
 end
 
 def tag_exists?(tag)
-  if $sqlite
-    list = $db.execute("select * from #{$tag_table} where tag = ?", tag)
-  elsif $mongo
-    list = $tag.find_one({:tag => tag}).to_a
-  end
+  list = $db.execute("select * from #{$tag_table} where tag = ?", tag)
   return list.length > 0
 end
 
 def add_tag(tag)
-  if $sqlite
-    unless tag_exists? tag
-      $db.execute("insert into #{$tag_table} values ( ? )", tag)
-    end
-    id = $db.execute("select oid from #{$tag_table} where tag = ?", tag)
-    return id[0]
-  elsif $mongo
-    unless tag_exists? tag
-      $tag.insert({:tag => tag})
-    end
-    id = $tag.find_one({:tag => tag})['_id'].to_s
-    return id
+  unless tag_exists? tag
+    $db.execute("insert into #{$tag_table} values ( ? )", tag)
   end
+  id = $db.execute("select oid from #{$tag_table} where tag = ?", tag)
+  return id[0]
 end
 
 def add_tags(list)
@@ -50,11 +38,7 @@ def add_tags(list)
 end
 
 def insert_torrent(url, name, magnet)
-  if $sqlite
-    $db.execute("insert into #{$torrent_table} values ( ?, ?, ?, ? )", url, name, magnet, Time.now.to_i)
-  elsif $mongo
-    $torrent.insert({:url => url, :name => name, :magnet => magnet, :date => Time.now.to_i})
-  end
+  $db.execute("insert into #{$torrent_table} values ( ?, ?, ?, ? )", url, name, magnet, Time.now.to_i)
 end
 
 def save_torrent(fn, tmp)
@@ -64,37 +48,20 @@ def save_torrent(fn, tmp)
 end
 
 def tag_id_by_name(tag)
-  if $sqlite
-    return $db.execute("select oid from #{$tag_table} where tag = ?", tag)
-  elsif $mongo
-    tags = $tag.find_one({:tag => tag})
-    return tags
-  end
+  return $db.execute("select oid from #{$tag_table} where tag = ?", tag)
 end
 
 def torrent_id_by_url(url)
-  if $sqlite
-    res = $db.execute("select oid from #{$torrent_table} where url = ?", url)
-    return res[0][0]
-  elsif $mongo
-    return $torrent.find_one({:url => url})['_id'].to_s
-  end
+  res = $db.execute("select oid from #{$torrent_table} where url = ?", url)
+  return res[0][0]
 end
 
 def latest_torrents(how_many=20)
-  if $sqlite
-    return $db.execute("select * from #{$torrent_table} order by date desc limit 0, ?", how_many)
-  elsif $mongo
-    return $torrent.find.sort([:date, :desc]).limit(how_many).to_a
-  end
+  return $db.execute("select * from #{$torrent_table} order by date desc limit 0, ?", how_many)
 end
 
 def make_tag_assoc(tag_id, torrent_id)
-  if $sqlite
-    $db.execute("insert into #{$map_table} values ( ?, ? )", tag_id, torrent_id)
-  elsif $mongo
-    $map.insert({:tag => tag_id, :torrent => torrent_id})
-  end
+  $db.execute("insert into #{$map_table} values ( ?, ? )", tag_id, torrent_id)
 end
 
 def map_tags_to_torrents(taglist, url)
@@ -120,24 +87,16 @@ end
 
 def urls_from_tag_ids(tag_ids)
   torrents = []
-  if $sqlite
-   torrent_ids = $db.execute("select torrent, count(*) num from #{$map_table} where tag in #{build_arr(tag_ids)} group by torrent having num = #{tag_ids.length}")
-    torrent_ids.flatten.each do |torrent_id|
-      a = $db.execute("select url,name,magnet from #{$torrent_table} where oid = ?", torrent_id).flatten
-      torrent = {
-        :url => a[0],
-        :name => a[1],
-        :magnet => a[2],
-        :date => a[3]
-      }
-      torrents.push(torrent)
-    end
-  elsif $mongo
-    torrent_ids = $map.find({:tag => {:$in => tag_ids}}).to_a
-    torrent_ids.each do |torrent_id|
-      a = $torrent.find_one({:_id => torrent_id}).to_a
-      torrents.push(torrent)
-    end
+  torrent_ids = $db.execute("select torrent, count(*) num from #{$map_table} where tag in #{build_arr(tag_ids)} group by torrent having num = #{tag_ids.length}")
+  torrent_ids.flatten.each do |torrent_id|
+    a = $db.execute("select url,name,magnet from #{$torrent_table} where oid = ?", torrent_id).flatten
+    torrent = {
+      :url => a[0],
+      :name => a[1],
+      :magnet => a[2],
+      :date => a[3]
+    }
+    torrents.push(torrent)
   end
   return torrents.uniq
 end

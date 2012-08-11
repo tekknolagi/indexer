@@ -8,13 +8,9 @@ GEM
       bson (~> 1.6.4)
     daemons (1.1.8)
     eventmachine (0.12.10)
-    mongo (1.6.4)
-      bson (~> 1.6.4)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
-    shotgun (0.9)
-      rack (>= 1.0)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
@@ -33,9 +29,7 @@ DEPENDENCIES
   base32
   bencode
   bson_ext
-  mongo
   rack
-  shotgun
   sinatra
   sqlite3
   thin

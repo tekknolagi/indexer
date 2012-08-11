@@ -54,18 +54,14 @@ end
 
 get '/new' do
   @urls = []
-  if $sqlite
-    latest_torrents.each do |torrent|
-      t = {
-        :name => torrent[0],
-        :url => torrent[1],
-        :magnet => torrent[2],
-        :date => torrent[3]
-      }
-      @urls.push(t)
-    end
-  elsif $mongo
-    @urls = latest_torrents
+  latest_torrents.each do |torrent|
+    t = {
+      :name => torrent[0],
+      :url => torrent[1],
+      :magnet => torrent[2],
+      :date => torrent[3]
+    }
+    @urls.push(t)
   end
   @upload_dir = $upload_dir
   erb :list
