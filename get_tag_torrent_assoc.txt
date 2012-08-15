@@ -1,0 +1,1 @@
+select tags.tag, torrents.url from tags inner join map on tags.oid=map.tag inner join torrents on map.torrent=torrents.oid;
