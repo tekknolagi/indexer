@@ -12,7 +12,7 @@ get '/' do
   erb :index
 end
 
-post '/' do
+post '/upload' do
   if params['file']
     @url = build_fn(params['file'][:filename])
     ext = File.extname(@url)

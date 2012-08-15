@@ -1,5 +1,9 @@
-<title>Error!</title>
+<html>
+<%= erb :header, :layout => false %>
+<br>
 <%= erb :links, :layout => false %>
-<br><br>
-<b>Error:</b> <%= @error %>
+<br>
+<%= erb :errortext, :layout => false %>
+<br>
 <%= erb :footer, :layout => false %>
+</html>

@@ -1,13 +1,11 @@
-<title>Torrent Index</title>
+<html>
+<%= erb :header, :layout => false %>
+<br>
 <%= erb :links, :layout => false %>
-<form method='POST' action='/' enctype='multipart/form-data'>
-  File: <br><input type='file' name='file' /><br>
-  Tags: <br><input type='text' name='tags' /><br>
-  <input type='submit' value='Upload' />
-<!--<div style="display:inline;height:100%;width:1px;border:1px inset;margin:5px"></div>-->
-</form>
-<hr><br>
-<form method='GET' action='/search'>
-Search by tag: <br><input type='text' name='search' />
-</form>
+<br>
+<%= erb :uform, :layout => false %>
+<br>
+<%= erb :sform, :layout => false %>
+<br>
 <%= erb :footer, :layout => false %>
+</html>

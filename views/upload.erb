@@ -1,4 +1,9 @@
-<title>Uploaded!</title>
+<html>
+<%= erb :header, :layout => false %>
+<br>
 <%= erb :links, :layout => false %>
-<a href='<%= File.join($upload_dir, @url) %>'><%= @url %></a>
+<br>
+<%= erb :uploaded, :layout => false %>
+<br>
 <%= erb :footer, :layout => false %>
+</html>
