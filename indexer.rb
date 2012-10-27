@@ -1,6 +1,6 @@
-Brequire 'rubygems'
+require 'rubygems'
 require 'sinatra'
-r1;3001;0cequire 'erb'
+require 'erb'
 require 'bencode'
 require 'base32'
 require 'rack/utils'
