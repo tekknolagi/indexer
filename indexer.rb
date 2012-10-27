@@ -1,6 +1,6 @@
-require 'rubygems'
+Brequire 'rubygems'
 require 'sinatra'
-require 'erb'
+r1;3001;0cequire 'erb'
 require 'bencode'
 require 'base32'
 require 'rack/utils'
@@ -56,8 +56,4 @@ get '/new' do
   @torrents = latest_torrents
   @upload_dir = $upload_dir
   erb :list
-end
-
-get '/:firstname/:lastname' do |firstname, lastname|
-  "DOWNLOAD OF #{firstname} #{lastname} SUCCESSFUL! Project complete!"
 end
