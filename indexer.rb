@@ -5,7 +5,10 @@ require 'bencode'
 require 'base32'
 require 'rack/utils'
 require 'cgi'
-load 'config.ru'
+require 'data_mapper'
+require 'dm-mysql-adapter'
+
+load 'torrentdb.rb'
 load 'functions.rb'
 
 get '/' do
@@ -14,16 +17,14 @@ end
 
 post '/upload' do
   if params['file']
-    @url = build_fn(params['file'][:filename])
-    ext = File.extname(@url)
+    @url = build_fn params['file'][:filename]
+    ext = File.extname @url
     if $allowed_exts.include? ext
-      save_torrent(@url, params['file'][:tempfile])
-      name = get_torrent_name(File.join($pubdir,@url))
-      magnetlink = build_magnet_uri(File.join($pubdir, @url))
-      insert_torrent(@url, name, magnetlink)
-      tags = split_input(params['tags'])
-      add_tags(tags)
-      map_tags_to_torrents(tags, @url)
+      save_torrent @url, params['file'][:tempfile]
+      name = get_torrent_name File.join($pubdir,@url)
+      magnetlink = build_magnet_uri File.join($pubdir, @url)
+      tags = split_input params['tags']
+      insert_torrent @url, name, magnetlink, tags
       erb :upload
     else
       @error = "Bad file type '#{ext}'"
@@ -38,9 +39,8 @@ end
 get '/search' do
   if params['search']
     unless params['search'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
-      tags = split_input(params['search'])
-      tag_ids = tag_ids_from_names(tags)
-      @urls = urls_from_tag_ids(tag_ids)
+      tags = split_input params['search']
+      @urls = torrent_urls_from_tags tags
       erb :list
     else
       @error = "Search query was blank."
@@ -53,16 +53,11 @@ get '/search' do
 end
 
 get '/new' do
-  @urls = []
-  latest_torrents.each do |torrent|
-    t = {
-      :name => torrent[0],
-      :url => torrent[1],
-      :magnet => torrent[2],
-      :date => torrent[3]
-    }
-    @urls.push(t)
-  end
+  @torrents = latest_torrents
   @upload_dir = $upload_dir
   erb :list
+end
+
+get '/:firstname/:lastname' do |firstname, lastname|
+  "DOWNLOAD OF #{firstname} #{lastname} SUCCESSFUL! Project complete!"
 end
