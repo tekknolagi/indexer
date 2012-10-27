@@ -1,10 +1,11 @@
-DataMapper.setup :default, 'mysql://user:password@host/database'
+DataMapper.setup :default, 'mysql://root:atwasaatmawmp@localhost/brightswipe'
 
 class Torrent
   include DataMapper::Resource
 
   property :id,          Serial
   property :name,        String
+  property :url,         String
   property :magnet,      String
   property :created_at,  DateTime
 
@@ -20,6 +21,9 @@ class Tag
 
   has n, :torrents, :through => Resource
 end
+
+DataMapper.finalize
+DataMapper.auto_upgrade!
 
 =begin
 

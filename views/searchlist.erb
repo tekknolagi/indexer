@@ -1,10 +1,10 @@
 <table class='search searchresults'>
 <tr><td>torrent</td><td>magnet</td></tr>
-<% if @urls.length > 0 %>
-<% @urls.each {|url| %>
+<% if 0 && @torrents.length > 0 %>
+<% @torrents.each {|torrent| %>
 <tr>
-<td><a href='<%= "#{$upload_dir}/#{url[:url]}" %>'><%= url[:name] %></a></td>
-<td><a href='<%= url[:magnet] %>'>magnet</a></td>
+<td><a href='<%= "#{@upload_dir}/#{torrent[:url]}" %>'><%= torrent[:name] %></a></td>
+<td><a href='<%= torrent[:magnet] %>'>magnet</a></td>
 </tr>
 <% } %>
 <% else %>

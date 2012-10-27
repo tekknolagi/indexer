@@ -1,5 +1,3 @@
-DataMapper.setup(:default, {:adapter  => "redis"})
-
 configure do
   set :environment, :development
   set :host, "torrent.hypeno.de"
@@ -47,7 +45,7 @@ def add_tag(tag)
     tagr = Tag.create :name => tag
     return tagr
   end
-  return Tag.all :name => tag
+  return Tag.first :name => tag
 end
 
 def add_tags(list)
@@ -60,16 +58,16 @@ end
 
 def insert_torrent(url, name, magnet, tags)
   tag_objs = add_tags tags
-  t = Torrent.create ({
-                        :name => name,
-                        :url => url,
-                        :magnet => magnet,
-                        :created_at => DateTime.now
-                      })
+  t = Torrent.new(
+                  :name => name,
+                  :url => url,
+                  :magnet => magnet,
+                  :created_at => DateTime.now
+                  )
   tag_objs.each {|tag|
     t.tags << tag
   }
-  t.save
+  t.save!
 end
 
 def save_torrent(fn, tmp)
@@ -79,7 +77,10 @@ def save_torrent(fn, tmp)
 end
 
 def latest_torrents(how_many=20)
-  return Torrent.all(:order => [:created_at.desc], :limit => how_many)
+  return Torrent.all(
+                     :order => [:created_at.desc],
+                     :limit => how_many
+                     )
 end
 
 def torrent_urls_from_tags(tags)
