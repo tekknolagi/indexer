@@ -6,7 +6,7 @@ class Torrent
   property :id,          Serial
   property :name,        String
   property :url,         String
-  property :magnet,      String
+  property :magnet,      Text
   property :created_at,  DateTime
 
   has n, :tags, :through => Resource  
