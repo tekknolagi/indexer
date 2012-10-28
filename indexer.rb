@@ -37,9 +37,9 @@ post '/upload' do
 end
 
 get '/search' do
-  if params['search']
-    unless params['search'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
-      tags = split_input params['search']
+  if params['q']
+    unless params['q'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
+      tags = split_input params['q']
       @torrents = torrents_from_tags tags
       erb :list
     else
