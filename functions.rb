@@ -89,7 +89,7 @@ def torrents_from_tags(tags)
     tago = Tag.all :name => tag
     torrents.push tago.torrents
   }
-  return torrents.flatten.uniq
+  return torrents.flatten.uniq.sort_by {|x| x[:created_at]}.reverse
 end
 
 def build_magnet_uri(fn)
