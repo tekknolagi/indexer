@@ -1,9 +1,38 @@
-<html>
-<%= erb :header, :layout => false %>
-<br>
-<%= erb :links, :layout => false %>
-<br>
-<%= erb :searchlist, :layout => false %>
-<br>
-<%= erb :footer, :layout => false %>
-</html>
+<%= erb :header, layout => false %>
+
+<%= erb :upload, layout => false %>
+
+<div id="search-list" class="bd">
+  <a href="/"><img src="/img/text-logo.png" class="text-logo" alt="" /></a>
+  <div class="search">
+    <ul class="nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/new">New</a></li>
+    </ul>
+    <form action="">
+      <input type="text" name="search" /><button id="result-search" class="btn-blue">Search</button>
+    </form>
+  </div>
+  <% unless @torrents.empty? %>
+  <ol id="results" class="results">
+    <% @torrents.each {|torrent| %>
+    <li>
+      <div class="actions">
+	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Download torrent</button></a>
+	<a href="<%= torrent[:magnet] %>"><button class="btn-magnet"><img src="/img/magnet-icon.png" alt="" />Magnet</button></a>
+      </div>
+      <div class="name"><%= torrent[:name] %></div>
+      <div class="meta">
+<!--	<span class="size">2.3 GB</span>
+	<span>&nbsp;|&nbsp;</span> -->
+	<span class="date">Uploaded on <%= torrent[:created_at].strftime "%A %B %d, %Y" %></span>
+      </div>
+    </li>
+    <% } %>
+  </ol>
+  <% else %>
+  <div>No torrents found.</div>
+  <% end %>
+</div>
+
+<%= erb :footer, layout => false %>

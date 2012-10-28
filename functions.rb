@@ -83,18 +83,13 @@ def latest_torrents(how_many=20)
                      )
 end
 
-def torrent_urls_from_tags(tags)
+def torrents_from_tags(tags)
   torrents = []
   tags.each {|tag|
     tago = Tag.all :name => tag
     torrents.push tago.torrents
   }
-  torrents = torrents.flatten.uniq
-  urls = []
-  torrents.each {|torrent|
-    urls.push torrent[:url]
-  }
-  return urls
+  return torrents.flatten.uniq
 end
 
 def build_magnet_uri(fn)

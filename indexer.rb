@@ -16,16 +16,16 @@ get '/' do
 end
 
 post '/upload' do
-  if params['file']
-    @url = build_fn params['file'][:filename]
+  if params['torrent']
+    @url = build_fn params['torrent'][:filename]
     ext = File.extname @url
     if $allowed_exts.include? ext
-      save_torrent @url, params['file'][:tempfile]
+      save_torrent @url, params['torrent'][:tempfile]
       name = get_torrent_name File.join($pubdir,@url)
       magnetlink = build_magnet_uri File.join($pubdir, @url)
       tags = split_input params['tags']
       insert_torrent @url, name, magnetlink, tags
-      erb :upload
+      erb :index
     else
       @error = "Bad file type '#{ext}'"
       erb :error
@@ -40,7 +40,7 @@ get '/search' do
   if params['search']
     unless params['search'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
       tags = split_input params['search']
-      @urls = torrent_urls_from_tags tags
+      @torrents = torrents_from_tags tags
       erb :list
     else
       @error = "Search query was blank."

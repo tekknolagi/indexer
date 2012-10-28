@@ -1,11 +1,27 @@
-<html>
-<%= erb :header, :layout => false %>
-<br>
-<%= erb :links, :layout => false %>
-<br>
-<%= erb :uform, :layout => false %>
-<br>
-<%= erb :sform, :layout => false %>
-<br>
-<%= erb :footer, :layout => false %>
-</html>
+<%= erb :header, layout => false %>
+
+<%= erb :upload, layout => false %>
+<div id="home" class="bd">
+  <a href="/"><img src="/img/logo.png" class="main-logo" alt="" /></a>
+  <div class="search">
+    <ul class="nav">
+      <li class="selected"><a href="/">Home</a></li>
+      <li><a href="/new">New</a></li>
+    </ul>
+    <form action="/search" method="get">
+      <input type="text" name="search" /><button id="home-search" class="btn-blue">Search</button>
+    </form>
+  <% if @url %>
+  <ul class="nav">
+    <li>
+      <div class="uploaded">
+        <a href="/i/<%= @url %>/"><%= @url %></a>
+      </div>
+    </li>
+  </ul>
+  <% end %>
+  </div>
+</div>
+<div id="overlay"></div>
+
+<%= erb :footer, layout => false %>
