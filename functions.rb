@@ -87,7 +87,9 @@ def torrents_from_tags(tags)
   torrents = []
   tags.each {|tag|
     tago = Tag.all :name => tag
+    tagn = Torrent.all :name.like => "%#{tag}%"
     torrents.push tago.torrents
+    torrents.push *tagn
   }
   return torrents.flatten.uniq.sort_by {|x| x[:created_at]}.reverse
 end
