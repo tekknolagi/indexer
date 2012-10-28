@@ -1,4 +1,4 @@
-DataMapper.setup :default, 'mysql://root:mybirthdayisseptember16@localhost/brightswipe'
+load 'dbconfig.rb'
 
 class Torrent
   include DataMapper::Resource

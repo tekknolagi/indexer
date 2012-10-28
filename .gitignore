@@ -1,4 +1,4 @@
-*.db
+B1;3001;0c*.db
 public/
 .DS_Store
 .DS_Store?
@@ -10,3 +10,4 @@ Icon?
 #*
 sqlite-shell.rb
 torrentdb.rb
+dbconfig.rb
