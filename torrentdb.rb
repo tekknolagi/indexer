@@ -1,4 +1,4 @@
-DataMapper.setup :default, 'mysql://root:mysql_atwasaatmawmp@localhost/brightswipe'
+DataMapper.setup :default, 'mysql://USER:PASSWORD@HOST/DATABSASE'
 
 class Torrent
   include DataMapper::Resource
