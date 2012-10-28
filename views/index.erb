@@ -1,6 +1,7 @@
 <%= erb :header, layout => false %>
 
 <%= erb :upload, layout => false %>
+
 <div id="home" class="bd">
   <a href="/"><img src="/img/logo-public.png" class="main-logo" alt="" /></a>
   <div class="search">
@@ -9,7 +10,7 @@
       <li><a href="/new">New</a></li>
     </ul>
     <form action="/search" method="get">
-      <input type="text" name="search" /><button id="home-search" class="btn-blue">Search</button>
+      <input type="text" name="q" /><button id="home-search" class="btn-blue">Search</button>
     </form>
   <% if @url %>
   <ul class="nav">
