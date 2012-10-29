@@ -52,7 +52,7 @@ get '/search' do
   end
 end
 
-get '/new' do
+get '/latest' do
   @torrents = latest_torrents
   @upload_dir = $upload_dir
   erb :list
