@@ -13,7 +13,7 @@ Then just run `bundle install`
 
 Usage:
 
-* Put your DataMapper setup line in `dbconfig.rb`
+* Put your DataMapper setup line in `dbconfig.rb` - modify `dbconfig_sample.rb`
 * To start the server (and create all necessary files and folders), run:	
     `rackup -p 8080 indexer.rb` or use it as a Passenger app (like I am).
 
