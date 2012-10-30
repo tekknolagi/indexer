@@ -1,6 +1,6 @@
-===============
+========
 To Do
-===============
+========
 
 1. API for modules
 2. Integration with bttrack so that we have stats and can automatically add torrents
@@ -12,9 +12,9 @@ To Do
 6. Magnet link upload
 7. Web torrent DL (HTTP or HTTPS)
 
-===============
-Longterm To Do
-===============
+========
+Longterm
+========
 
 1. Self-hosting server layer to host a local cache of the DB
 2. Functionality to update the local cache through more up to date peers, and to update the local caches of less up to date peers using its own
