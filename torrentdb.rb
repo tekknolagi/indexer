@@ -8,7 +8,7 @@ class Torrent
   property :magnet,      Text
   property :created_at,  DateTime
 
-  has n, :tags, :through => Resource, :constraint => :destroy
+  has n, :tags, :through => Resource
 end
 
 class Tag
@@ -18,7 +18,7 @@ class Tag
   property :name,    String
   property :hits,    Integer
 
-  has n, :torrents, :through => Resource#, :constraint => :set_nil
+  has n, :torrents, :through => Resource
 end
 
 DataMapper.finalize

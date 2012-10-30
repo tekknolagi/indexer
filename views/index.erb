@@ -6,10 +6,7 @@
   <a href="/"><img src="/img/logo.png" class="main-logo" alt="" /></a>
   <p class="text-public">Public!</p>
   <div class="search">
-    <ul class="nav">
-      <li class="selected"><a href="/">Home</a></li>
-      <li><a href="/latest">Latest</a></li>
-    </ul>
+    <%= erb :nav, layout => false %>
     <form action="/search" method="get">
       <input type="text" name="q" /><button id="home-search" class="btn-blue">Search</button>
     </form>
