@@ -1,6 +1,21 @@
 ========
-Installation
+About
 ========
+
+This is Brightswipe. It's a torrent indexer - at least for now; DHT functionality is on the way.
+
+The app hosted at brightswipe.com will be going private soon, and will start off exclusive to my school. I hope to do a Facebook-style expansion from there.
+
+It's written in Ruby, with a MySQL backend.
+
+I wrote it keeping everything in `SPEC.md` in mind, and the project should stay that way.
+
+Thanks for checking in,
+Max
+
+=========
+Installation
+=========
 
 It's pretty simple.
 
