@@ -85,8 +85,8 @@ def torrents_from_tags(tags)
   return torrents.flatten.uniq.sort_by {|x| x[:created_at]}.reverse
 end
 
-def build_magnet_uri(fn)
-  torrent = BEncode.load_file(fn)
+def build_magnet_uri(rfile)
+  torrent = BEncode.load_file rfile
   sha1 = OpenSSL::Digest::SHA1.digest(torrent['info'].bencode)
   p = {
     :xt => "urn:btih:" << Base32.encode(sha1),
@@ -101,16 +101,16 @@ def build_magnet_uri(fn)
   return magnet_uri
 end
 
-def get_torrent_name(fn)
-  file = BEncode.load_file(fn)
+def get_torrent_name(rfile)
+  file = BEncode.load_file rfile
   return file['info']['name']
 end
 
-def valid_file?(fn)
+def valid_file?(rfile)
   begin
-    BEncode.load_file(fn)
-    return true
+    BEncode.load_file rfile
   rescue BEncode::DecodeError
     return false
   end
+  return true
 end

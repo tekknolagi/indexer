@@ -16,19 +16,16 @@ get '/' do
 end
 
 post '/upload' do
-  tempfile = params['torrent'][:tempfile]
-  tempfn   = params['torrent'][:filename]
   if params['torrent']
-    fn = save_torrent build_fn(tempfn), tempfile
+    tempfile = params['torrent'][:tempfile]
+    tempfn   = params['torrent'][:filename]
+    fn = save_torrent tempfn, tempfile
     if valid_file? fn
       @name = get_torrent_name fn
       @magnetlink = build_magnet_uri fn
-      tags = split_input params['tags']
-      insert_torrent @name, @magnetlink, tags
-      FileUtils.rm(fn)
+      insert_torrent @name, @magnetlink, split_input(params['tags'])
       erb :index
     else
-      FileUtils.rm(fn)
       @error = "Bad torrent file formatting."
       erb :error
     end
