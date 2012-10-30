@@ -7,6 +7,7 @@ require 'rack/utils'
 require 'cgi'
 require 'data_mapper'
 require 'dm-mysql-adapter'
+require 'dm-constraints'
 
 load 'torrentdb.rb'
 load 'functions.rb'
