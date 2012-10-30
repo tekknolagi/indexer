@@ -20,12 +20,16 @@ post '/upload' do
     @url = build_fn params['torrent'][:filename]
     ext = File.extname @url
     if $allowed_exts.include? ext
-      save_torrent @url, params['torrent'][:tempfile]
-      name = get_torrent_name File.join($pubdir,@url)
-      magnetlink = build_magnet_uri File.join($pubdir, @url)
-      tags = split_input params['tags']
-      insert_torrent @url, name, magnetlink, tags
-      erb :index
+      if valid_file? params['torrent'][:tempfile]
+        save_torrent @url, params['torrent'][:tempfile]
+        name = get_torrent_name File.join($pubdir,@url)
+        magnetlink = build_magnet_uri File.join($pubdir, @url)
+        tags = split_input params['tags']
+        insert_torrent @url, name, magnetlink, tags
+        erb :index
+      else
+        @error = "Bad torrent file formatting."
+        erb :error
     else
       @error = "Bad file type '#{ext}'"
       erb :error
@@ -39,6 +43,7 @@ end
 get '/search' do
   if params['q']
     unless params['q'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
+      @query = params['q']
       tags = split_input params['q']
       @torrents = torrents_from_tags tags
       erb :list

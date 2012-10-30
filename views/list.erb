@@ -10,7 +10,7 @@
       <li><a href="/latest">Latest</a></li>
     </ul>
     <form action="/search" method="/get">
-      <input type="text" name="q" /><button id="result-search" class="btn-blue">Search</button>
+      <input type="text" name="q" placeholder="<%= @query %>"/><button id="result-search" class="btn-blue">Search</button>
     </form>
   </div>
   <% unless @torrents.empty? %>
@@ -18,7 +18,7 @@
     <% @torrents.each {|torrent| %>
     <li>
       <div class="actions">
-	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Download torrent</button></a>
+	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Torrent</button></a>
 	<a href="<%= torrent[:magnet] %>"><button class="btn-magnet"><img src="/img/magnet-icon.png" alt="" />Magnet</button></a>
       </div>
       <div class="name"><%= torrent[:name] %></div>

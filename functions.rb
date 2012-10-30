@@ -58,12 +58,7 @@ end
 
 def insert_torrent(url, name, magnet, tags)
   tag_objs = add_tags tags
-  t = Torrent.new(
-                  :name => name,
-                  :url => url,
-                  :magnet => magnet,
-                  :created_at => DateTime.now
-                  )
+  t = Torrent.new :name => name, :url => url, :magnet => magnet, :created_at => DateTime.now
   tag_objs.each {|tag|
     t.tags << tag
   }
@@ -77,10 +72,7 @@ def save_torrent(fn, tmp)
 end
 
 def latest_torrents(how_many=20)
-  return Torrent.all(
-                     :order => [:created_at.desc],
-                     :limit => how_many
-                     )
+  return Torrent.all :order => [:created_at.desc], :limit => how_many
 end
 
 def torrents_from_tags(tags)
@@ -115,3 +107,11 @@ def get_torrent_name(fn)
   return file['info']['name']
 end
 
+def valid_file?(fn)
+  begin
+    BEncode.load_file(fn)
+    return true
+  rescue BEncode::DecodeError
+    return false
+  end
+end
