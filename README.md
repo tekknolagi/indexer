@@ -10,7 +10,7 @@ It's written in Ruby, with a MySQL backend.
 
 I wrote it keeping everything in `SPEC.md` in mind, and the project should stay that way.
 
-Thanks for checking in,
+Thanks for checking in,<br>
 Max
 
 =========
