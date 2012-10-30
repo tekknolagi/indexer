@@ -3,9 +3,8 @@ configure do
   set :host, "torrent.hypeno.de"
   set :port, "3000"
   
-  $upload_dir = 'i'
   $allowed_exts = [".torrent"]
-  $pubdir = File.join 'public', $upload_dir
+  $pubdir = 'public/i'
 
   unless File.directory? 'public'
     Dir.mkdir 'public'
