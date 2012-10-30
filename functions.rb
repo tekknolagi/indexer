@@ -56,9 +56,9 @@ def add_tags(list)
   return objs
 end
 
-def insert_torrent(url, name, magnet, tags)
+def insert_torrent(name, magnet, tags)
   tag_objs = add_tags tags
-  t = Torrent.new :name => name, :url => url, :magnet => magnet, :created_at => DateTime.now
+  t = Torrent.new :name => name, :magnet => magnet, :created_at => DateTime.now
   tag_objs.each {|tag|
     t.tags << tag
   }

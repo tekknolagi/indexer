@@ -18,7 +18,7 @@
     <% @torrents.each {|torrent| %>
     <li>
       <div class="actions">
-	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Torrent</button></a>
+<!--	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Torrent</button></a>-->
 	<a href="<%= torrent[:magnet] %>"><button class="btn-magnet"><img src="/img/magnet-icon.png" alt="" />Magnet</button></a>
       </div>
       <div class="name"><%= torrent[:name] %></div>

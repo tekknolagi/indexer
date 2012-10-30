@@ -16,20 +16,21 @@ get '/' do
 end
 
 post '/upload' do
+  tempfile = params['torrent'][:tempfile]
   if params['torrent']
-    @url = build_fn params['torrent'][:filename]
-    ext = File.extname @url
+    url = build_fn tempfile
+    ext = File.extname url
     if $allowed_exts.include? ext
-      if valid_file? params['torrent'][:tempfile]
-        save_torrent @url, params['torrent'][:tempfile]
-        name = get_torrent_name File.join($pubdir,@url)
-        magnetlink = build_magnet_uri File.join($pubdir, @url)
+      if valid_file? tempfile
+        @name = get_torrent_name File.join($pubdir, tempfile)
+        @magnetlink = build_magnet_uri File.join($pubdir, tempfile)
         tags = split_input params['tags']
-        insert_torrent @url, name, magnetlink, tags
+        insert_torrent name, magnetlink, tags
         erb :index
       else
         @error = "Bad torrent file formatting."
         erb :error
+      end
     else
       @error = "Bad file type '#{ext}'"
       erb :error
