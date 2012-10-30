@@ -1,9 +1,8 @@
 configure do
   set :environment, :development
-  set :host, "torrent.hypeno.de"
+  set :host, "brightswipe.com"
   set :port, "3000"
-  
-  $allowed_exts = [".torrent"]
+
   $pubdir = 'public/i'
 
   unless File.directory? 'public'
