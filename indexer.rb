@@ -7,6 +7,7 @@ require 'rack/utils'
 require 'cgi'
 require 'data_mapper'
 require 'dm-mysql-adapter'
+require 'pry'
 
 load 'torrentdb.rb'
 load 'functions.rb'
@@ -17,22 +18,19 @@ end
 
 post '/upload' do
   tempfile = params['torrent'][:tempfile]
+  tempfn   = params['torrent'][:filename]
   if params['torrent']
-    url = build_fn tempfile
-    ext = File.extname url
-    if $allowed_exts.include? ext
-      if valid_file? tempfile
-        @name = get_torrent_name File.join($pubdir, tempfile)
-        @magnetlink = build_magnet_uri File.join($pubdir, tempfile)
-        tags = split_input params['tags']
-        insert_torrent name, magnetlink, tags
-        erb :index
-      else
-        @error = "Bad torrent file formatting."
-        erb :error
-      end
+    fn = save_torrent build_fn(tempfn), tempfile
+    if valid_file? fn
+      @name = get_torrent_name fn
+      @magnetlink = build_magnet_uri fn
+      tags = split_input params['tags']
+      insert_torrent @name, @magnetlink, tags
+      FileUtils.rm(fn)
+      erb :index
     else
-      @error = "Bad file type '#{ext}'"
+      FileUtils.rm(fn)
+      @error = "Bad torrent file formatting."
       erb :error
     end
   else

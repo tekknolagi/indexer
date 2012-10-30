@@ -26,8 +26,8 @@ def randomize(hash)
 end
 
 def build_fn(fn)
-  ext = File.extname(fn)
-  base = File.basename(fn, '.*')
+  ext = File.extname fn
+  base = File.basename fn, '.*'
   return randomize(:fn => base)+ext
 end
 
@@ -66,9 +66,10 @@ def insert_torrent(name, magnet, tags)
 end
 
 def save_torrent(fn, tmp)
-  File.open(File.join('public', $upload_dir, fn), 'w') do |f|
+  File.open(File.join($pubdir, fn), 'w') do |f|
     f.write(tmp.read)
   end
+  return File.join($pubdir, fn)
 end
 
 def latest_torrents(how_many=20)
