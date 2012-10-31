@@ -33,7 +33,7 @@ var uploadModal = function(){
     });
     $('#overlay').click(function(){
 	$('#up-modal').fadeOut('fast', function(){
-	    $('#overlay').fadeOut('fast', function(){
+	    $('#overlay').fadeOut('slow', function(){
 		$('.up-cont').removeClass('open');
 	    });				
 	});
