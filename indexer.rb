@@ -25,9 +25,11 @@ post '/upload' do
       @name = get_torrent_name fn
       @magnetlink = build_magnet_uri fn
       insert_torrent @name, @magnetlink, split_input(params['tags'])
+      FileUtils.rm fn
       erb :index
     else
       @error = "Bad torrent file formatting."
+      FileUtils.rm fn
       erb :error
     end
   else
