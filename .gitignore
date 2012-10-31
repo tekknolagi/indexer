@@ -1,5 +1,4 @@
-B1;3001;0c*.db
-public/
+*.db
 .DS_Store
 .DS_Store?
 ._*

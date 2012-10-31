@@ -1,0 +1,418 @@
+@import url(http://fonts.googleapis.com/css?family=Varela+Round);
+@import url(/css/reset.css);
+
+* {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background: url(/img/bg.jpg) repeat-x center top transparent;
+    position: relative;
+    font-family:"Varela Round", Arial, Helvetica, sans-serif;
+    font-size: 62.5%;
+}
+
+
+.bd {
+    width:90%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding-top: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: none;
+}
+
+
+
+/* MAIN PAGE 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+
+.main-logo {
+    width: 166px;
+    height:120px;
+    margin: 0 auto 48px;
+    display: block;
+}
+
+
+
+
+
+
+/* RESULTS PAGE 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+
+#search-list {
+    max-width: 720px;
+    padding-top: 30px;
+}
+
+.text-logo {
+    width: 166px;
+    height: 31px;
+    float: left;
+    margin-top: 32px;
+}
+
+#search-list .search {
+    margin-left: 200px;
+}
+
+
+
+
+
+
+
+/* RESULTS LIST 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+
+.results {
+    background: #fff;
+    border:1px solid #ddd;
+    margin-top: 36px;
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.results li {
+    padding: 18px;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+
+.results li:last-child {
+    border-bottom: none;
+}
+
+.name {
+    font-size: 1.8em;
+    color:#222;
+    margin-top: 6px;
+}
+
+.meta {
+    font-size:1.2em;
+    color:#999;
+    padding: 3px;
+    margin-top: 1px;
+}
+
+.actions {
+    float:right;
+}
+
+.actions button {
+    margin-left: 6px;
+}
+
+
+
+
+
+
+
+/* SEARCH INNER LAYOUT
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+
+form {
+    width: 100%;
+}
+
+form input {
+    width: 80%;
+}
+
+form button {
+    width: 18%;
+    margin-left: 2%;
+}
+
+
+
+
+
+
+
+
+
+/* NAVIGATION 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+.nav {
+    padding: 3px;
+    margin-bottom: 12px;
+}
+
+.nav li {
+    display: inline-block;
+    font-size:1.2em;
+    padding: 0 1.5em;
+    border-right: 2px solid #ccc;
+    color:#555;
+    cursor:pointer;
+}
+
+.nav .selected, .nav li:hover {
+    color:#47b5e6;
+}
+
+.nav li:first-child {
+    padding-left: 0;
+}
+
+.nav li:last-child {
+    padding-right: 0;
+    border-right: none;
+}
+
+.nav li div.uploaded {
+    width: 410px;
+    height: 50px;
+    text-align: center;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+
+.nav li.uploaded a {
+    position: relative;
+    top: 10px;
+}
+
+.nav li a {
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+/* UPLOAD BUTTON 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+.up-cont {
+    position: fixed;
+    right: 21px;
+    top:21px;
+    z-index: 10;
+}
+
+.up-cont > button {
+
+}
+
+#up-modal {
+    position: fixed;
+    top: 71px;
+    right: 21px;
+    background: #fff;
+    border:1px solid #ddd;
+    padding:3em;
+    display: none;
+
+    width: 360px;
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+
+    -moz-box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+#up-modal h1 {
+    font-size: 2.1em;
+    color: #555;
+    color: #47b5e6;
+}
+
+#up-modal label {
+    font-size: 1.2em;
+    display: block;
+    color: #999;
+    margin: 2em 0 1em;
+}
+
+#up-modal input {
+    width: 100%;
+}
+
+#up-modal button {
+    width: auto;
+    margin: 2em 0 0;
+}
+
+
+#up-modal .arrow {
+    border:10px solid transparent;
+    border-bottom-color:#ddd;
+    position: absolute;
+    top:-20px;
+    right: 35px;
+}
+
+#up-modal .arrow span {
+    border:10px solid transparent;
+    border-bottom-color:#fff;
+    position: absolute;
+    top:-9px;
+    right: -10px;
+
+}
+
+
+
+
+
+
+
+
+/* BUTTON AND INPUT STYLES 
+   ------------------------------
+   ------------------------------
+   ------------------------------*/
+
+button {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    padding:0.75em 1.5em;
+    border:1px solid #ccc;
+    background: #eee;
+    font-family:"Varela Round", Arial, Helvetica, sans-serif;
+    cursor:pointer;
+    text-shadow: 0 1px 0 #fff;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset;
+
+    background: #eeeeee; /* Old browsers */
+    background: -moz-linear-gradient(top,  #eeeeee 0%, #dddddd 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#dddddd)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #eeeeee 0%,#dddddd 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #eeeeee 0%,#dddddd 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0 ); /* IE6-9 */
+}
+
+.btn-blue {
+    color:#fff;
+    text-shadow: 0 1px 0 #066FA8;
+    border-color: #066FA8;
+
+    background: #28a8dd; /* Old browsers */
+    background: -moz-linear-gradient(top,  #28a8dd 0%, #067dbe 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#28a8dd), color-stop(100%,#067dbe)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #28a8dd 0%,#067dbe 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #28a8dd 0%,#067dbe 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #28a8dd 0%,#067dbe 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #28a8dd 0%,#067dbe 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28a8dd', endColorstr='#067dbe',GradientType=0 ); /* IE6-9 */
+}
+
+button:hover {
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.5) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.5) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.5) inset;
+}
+
+.btn-blue:hover {
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.15) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.15) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(255,255,255,0.5) inset, 0 0 0 200px rgba(255,255,255,0.15) inset;
+}
+
+
+button img {
+    width: 13px;
+    height: 13px;
+    margin-bottom: -3px;
+    margin-right:6px;
+    margin-left: -3px; 
+}
+
+input {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    padding:0.75em 1em;
+    border:1px solid #ccc;
+    font-family:"Varela Round", Arial, Helvetica, sans-serif;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -moz-box-shadow: 0 1px 0 #fff, 0 1px 2px #eee inset;
+    -webkit-box-shadow: 0 1px 0 #fff, 0 1px 2px #eee inset;
+    box-shadow: 0 1px 0 #fff, 0 1px 2px #eee inset;
+}
+
+input:hover {
+    border-color: #47b5e6;
+}
+
+input:focus {
+    border-color: #47b5e6;
+    background: #E5EFF4;
+    outline: none;
+}
+
+div#credits {
+    position: relative;
+    text-align: center;
+    top: 45px;
+}
+
+p.text-public {
+    position: relative;
+    text-align: center;
+    top: -50px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: -40px;
+}
