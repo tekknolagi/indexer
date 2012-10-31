@@ -40,5 +40,5 @@ var uploadModal = function(){
     });
 }
 
-//viewSwitch();
+viewSwitch();
 uploadModal();
