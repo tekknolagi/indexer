@@ -34,6 +34,9 @@ GEM
     dm-mysql-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_mysql (~> 0.10.6)
+    dm-pager (1.1.0)
+      dm-aggregates (>= 0.10.1)
+      dm-core (>= 0.10.1)
     dm-serializer (1.2.2)
       dm-core (~> 1.2.0)
       fastercsv (~> 1.5)
@@ -82,5 +85,6 @@ DEPENDENCIES
   data_mapper
   dm-constraints
   dm-mysql-adapter
+  dm-pager
   rack
   sinatra

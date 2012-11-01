@@ -70,8 +70,12 @@ def save_torrent(fn, tmp)
   return File.join($pubdir, fn)
 end
 
-def latest_torrents(how_many=20)
-  return Torrent.all :order => [:created_at.desc], :limit => how_many
+def latest_torrents(limit=50, per_page=10, page=1)
+  results = Torrent.all(:order => [:created_at.desc]).page(page, :per_page => how_many)
+  return {
+    :torrents => results,
+    :pagination => results.pager.to_html('/latest')
+  }
 end
 
 def torrents_from_tags(tags)
