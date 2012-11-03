@@ -7,7 +7,6 @@ require 'rack/utils'
 require 'cgi'
 require 'data_mapper'
 require 'dm-mysql-adapter'
-require 'dm-constraints'
 require 'dm-pager'
 
 load 'torrentdb.rb'
@@ -57,8 +56,6 @@ get '/search' do
 end
 
 get '/latest/?:page?' do
-  results = latest_torrents(20, 5, params[:page].to_i)
-  @torrents = results[:torrents]
-  @pagination = results[:pagination]
+  @torrents = latest_torrents 20, 5, params[:page].to_i
   erb :list
 end

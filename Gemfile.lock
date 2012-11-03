@@ -83,7 +83,6 @@ DEPENDENCIES
   bson_ext
   bundler
   data_mapper
-  dm-constraints
   dm-mysql-adapter
   dm-pager
   rack
