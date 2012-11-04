@@ -5,6 +5,7 @@ class Torrent
 
   property :id,          Serial
   property :name,        String
+  property :info_hash,        String
   property :magnet,      Text
   property :created_at,  DateTime
 
@@ -20,6 +21,18 @@ class Tag
 
   has n, :torrents, :through => Resource
 end
+
+=begin
+class User
+  include DataMapper::Resource
+  property :id,           Serial
+  property :name,         String
+  property :email,        String
+  property :created_at,   DateTime
+  property :pass_hash     String
+
+end
+=end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!

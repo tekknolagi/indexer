@@ -24,7 +24,7 @@ post '/upload' do
     if valid_file? fn
       @name = get_torrent_name fn
       @magnetlink = build_magnet_uri fn
-      insert_torrent @name, @magnetlink, split_input(params['tags'])
+      insert_torrent fn, @name, @magnetlink, split_input(params['tags'])
       FileUtils.rm fn
       erb :index
     else

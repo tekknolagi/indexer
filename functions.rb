@@ -54,9 +54,16 @@ def add_tags(list)
   return objs
 end
 
-def insert_torrent(name, magnet, tags)
+def insert_torrent(rfile, name, magnet, tags)
   tag_objs = add_tags tags
-  t = Torrent.new :name => name, :magnet => magnet, :created_at => DateTime.now
+  hash = get_torrent_hash rfile
+  t = Torrent.first_or_new({:info_hash => hash},
+                           {
+                             :name => name,
+                             :magnet => magnet,
+                             :created_at => Time.now
+                           }
+                           )
   tag_objs.each {|tag|
     t.tags << tag
   }
@@ -113,4 +120,10 @@ def valid_file?(rfile)
     return false
   end
   return true
+end
+
+def get_torrent_hash(rfile)
+  torrent = BEncode.load_file rfile
+  hash = "#{Base32.encode OpenSSL::Digest::SHA1.digest(torrent['info'].bencode)}"
+  return hash
 end
