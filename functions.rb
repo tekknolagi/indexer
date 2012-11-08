@@ -57,13 +57,7 @@ end
 def insert_torrent(rfile, name, magnet, tags)
   tag_objs = add_tags tags
   hash = get_torrent_hash rfile
-  t = Torrent.first_or_new({:info_hash => hash},
-                           {
-                             :name => name,
-                             :magnet => magnet,
-                             :created_at => Time.now
-                           }
-                           )
+  t = Torrent.first_or_new({:info_hash => hash}, {:name => name, :magnet => magnet, :created_at => Time.now})
   tag_objs.each {|tag|
     t.tags << tag
   }
@@ -126,4 +120,28 @@ def get_torrent_hash(rfile)
   torrent = BEncode.load_file rfile
   hash = "#{Base32.encode OpenSSL::Digest::SHA1.digest(torrent['info'].bencode)}"
   return hash
+end
+
+def get_torrent_rating(t)
+  #A la Reddit
+  t = DateTime.now.to_i - t[:created_at].to_i
+  x = t[:downloads]
+  if x > 0
+    y = 1
+  elsif x == 0
+    y = 0
+  else
+    y = -1
+  end
+  if Math.abs(x) >= 1
+    z = Math.abs(x)
+  else
+    z = 1
+  end
+  rating = (Math.log10(z.to_f)+y*t.to_f/45000.0).to_i
+  return rating
+end
+
+def get_magnet_by_id(id)
+  Torrent.first(:id => id)[:magnet]
 end

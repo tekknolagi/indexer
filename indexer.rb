@@ -59,3 +59,12 @@ get '/latest/?:page?' do
   @torrents = latest_torrents 20, 5, params[:page].to_i
   erb :list
 end
+
+get '/magnet/:id' do
+  if params[:id]
+    redirect get_magnet_by_id(params[:id])
+  else
+    @error = "No id parameter passed."
+    erb :error
+  end
+end
