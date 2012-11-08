@@ -20,8 +20,9 @@
       </div>
       <div class="name"><%= torrent[:name] %></div>
       <div class="meta">
-<!--	<span class="size">2.3 GB</span>
-	<span>&nbsp;|&nbsp;</span> -->
+      <span class="downloads"><%= torrent[:downloads] || 0 %> downloads</span>
+<!--	<span class="size">2.3 GB</span> -->
+	<span>&nbsp;|&nbsp;</span>
 	<span class="date">Uploaded on <%= torrent[:created_at].strftime "%A %B %d, %Y" %></span>
       </div>
     </li>

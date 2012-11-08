@@ -142,6 +142,6 @@ def get_torrent_rating(t)
   return rating
 end
 
-def get_magnet_by_id(id)
-  Torrent.first(:id => id)[:magnet]
+def get_torrent_by_id(id)
+  Torrent.first :id => id
 end

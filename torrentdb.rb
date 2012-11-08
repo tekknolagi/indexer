@@ -1,3 +1,7 @@
+require 'data_mapper'
+require 'dm-mysql-adapter'
+require 'dm-pager'
+
 load 'dbconfig.rb'
 
 class Torrent

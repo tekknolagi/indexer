@@ -5,9 +5,6 @@ require 'bencode'
 require 'base32'
 require 'rack/utils'
 require 'cgi'
-require 'data_mapper'
-require 'dm-mysql-adapter'
-require 'dm-pager'
 
 load 'torrentdb.rb'
 load 'functions.rb'
@@ -62,7 +59,14 @@ end
 
 get '/magnet/:id' do
   if params[:id]
-    redirect get_magnet_by_id(params[:id])
+    t = get_torrent_by_id params[:id]
+    unless t[:downloads]
+      t[:downloads] = 1
+    else
+      t[:downloads] += 1
+    end
+    t.save!
+    redirect t[:magnet]
   else
     @error = "No id parameter passed."
     erb :error
