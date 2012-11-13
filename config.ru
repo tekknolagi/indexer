@@ -1,4 +1,10 @@
 require 'bundler/setup'
-load './indexer.rb'
+load 'lib/indexer.rb'
+load 'lib/api.rb'
+load 'lib/magnet.rb'
 
-run Sinatra::Application
+run Rack::URLMap.new({
+    "/" => Brightswipe.new,
+    "/api" => Brightswipe::API.new,
+    "/magnet" => Brightswipe::Magnet.new
+    })

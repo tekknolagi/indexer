@@ -85,5 +85,6 @@ DEPENDENCIES
   data_mapper
   dm-mysql-adapter
   dm-pager
+  json
   rack
   sinatra
