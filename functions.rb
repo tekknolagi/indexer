@@ -1,18 +1,3 @@
-configure do
-  set :environment, :development
-  set :host, "brightswipe.com"
-  set :port, "3000"
-
-  $pubdir = 'public/i'
-
-  unless File.directory? 'public'
-    Dir.mkdir 'public'
-    unless File.directory? $pubdir
-      Dir.mkdir $pubdir
-    end
-  end
-end
-
 def randomize(fn, len=10)
   a = 0
   for i in 1..len

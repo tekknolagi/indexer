@@ -7,8 +7,8 @@ require 'rack/utils'
 require 'cgi'
 require 'json'
 
-load 'lib/torrentdb.rb'
-load 'lib/functions.rb'
+load 'torrentdb.rb'
+load 'functions.rb'
 
 class Brightswipe < Sinatra::Base
   get '/' do
