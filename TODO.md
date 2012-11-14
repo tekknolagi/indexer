@@ -1,4 +1,3 @@
-========
 To Do
 ========
 
@@ -13,7 +12,6 @@ To Do
 7. Web torrent DL (HTTP or HTTPS)
 8. Salt with torrent, use as login
 
-========
 Longterm
 ========
 

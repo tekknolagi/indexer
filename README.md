@@ -1,4 +1,3 @@
-========
 About
 ========
 
@@ -13,7 +12,6 @@ I wrote it keeping everything in `SPEC.md` in mind, and the project should stay 
 Thanks for checking in,<br>
 Max
 
-=========
 Installation
 =========
 
@@ -32,7 +30,6 @@ Usage:
 * To start the server (and create all necessary files and folders), run:	
     `rackup -p 8080 indexer.rb` or use it as a Passenger app (like I am).
 
-========
 Contributors
 ========
 

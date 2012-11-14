@@ -4,7 +4,12 @@ class Brightswipe::API < Sinatra::Base
   end
 
   get '/all' do
-    Torrent.all(:order => :id.desc).to_json
+    with_tags = []
+    t = Torrent.all(:order => :id.desc)
+    t.each {|torrent|
+      with_tags.push({:torrent => torrent, :tags => torrent.tags})
+    }
+    with_tags.to_json
   end
   
   get '/latest' do

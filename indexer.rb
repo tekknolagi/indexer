@@ -55,7 +55,7 @@ class Brightswipe < Sinatra::Base
   end
 
   get '/all' do
-    @torrents = Torrent.all
+    @torrents = Torrent.all :order => :id.desc
     erb :list
   end
   
