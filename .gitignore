@@ -8,5 +8,6 @@ Icon?
 *~
 #*
 sqlite-shell.rb
-torrentdb.rb
 dbconfig.rb
+.travis.yml
+Rakefile
