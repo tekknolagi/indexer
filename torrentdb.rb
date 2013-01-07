@@ -50,6 +50,16 @@ class User
 
   has n, :torrents, :through => Resource
   has 1, :invite, :through => Resource
+
+  #returns self if user pass is correct, else returns false.
+  def authenticate(password_attempt)
+    if BCrypt::Password.new(pass_hash) == password_attempt
+      return self
+    else
+      false
+    end
+  end
+  
 end
 
 DataMapper.finalize

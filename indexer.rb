@@ -6,15 +6,39 @@ require 'base32'
 require 'rack/utils'
 require 'cgi'
 require 'json'
+require 'bcrypt'
 
 load 'torrentdb.rb'
 load 'functions.rb'
+
+enable :sessions
 
 class Brightswipe < Sinatra::Base
   get '/' do
     erb :index
   end
+
+  post '/signup' do
+    ##Obligatory data validations needed ##
+    user = User.new
+    user.name = params[:user][:name]
+    user.pass_hash = BCrypt::Password.create(params[:user][:password])
+    user.save
+  end
   
+  post '/signin' do
+    user = User.first(:email => params[:login][:email].downcase)
+    if user && user.authenticate(params[:login][:password])
+      session[:user_id] = user.id
+    end
+    #do a reload here or redirect, flash signin message  
+  end
+
+  get '/signout' do
+    session[:user_id] = nil
+    #flash a message saying signed out, redirect
+  end
+
   post '/upload' do
     if params['torrent']
       tempfile = params['torrent'][:tempfile]
