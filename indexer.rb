@@ -11,7 +11,7 @@ require 'bcrypt'
 load 'torrentdb.rb'
 load 'functions.rb'
 
-enable :sessions
+use Rack::Session::Cookie, :expire_after => 1000 #expires in 1000 seconds
 
 class Brightswipe < Sinatra::Base
   get '/' do
@@ -24,19 +24,27 @@ class Brightswipe < Sinatra::Base
     user.name = params[:user][:name]
     user.pass_hash = BCrypt::Password.create(params[:user][:password])
     user.save
+    if user.saved?
+      session[:user_id] = user.id
+      redirect to('/')
+    else
+      #handle an error in saving
+    end
   end
   
   post '/signin' do
     user = User.first(:email => params[:login][:email].downcase)
     if user && user.authenticate(params[:login][:password])
       session[:user_id] = user.id
+      redirect to('/')
+    else
+      #handle bad login data
     end
-    #do a reload here or redirect, flash signin message  
   end
 
   get '/signout' do
     session[:user_id] = nil
-    #flash a message saying signed out, redirect
+    redirect to('/')
   end
 
   post '/upload' do
