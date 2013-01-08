@@ -1,41 +1,41 @@
+Spec
 ========
-Project Specification
-========
 
-##General requirements:
+###Technical
 
-* Code must be:
-   * Clean. Visual appeal in the source code is a must.
-   * Efficient. This must have a small footprint.
-   * Readable. Simplicity is favored over cleverness. Be as explicit as possible and use apropos variable names. Comments should be added at the discretion of the programmer to make something clear if it is not thought to be clear enough.
-   * Modular. Each function should be as small as possible, drawing on features from other functions. Building blocks.
-* Functionality should be generally in line with the community's needs.
+1. Must be written in Ruby.
+2. Must use DataMapper as an ORM.
+3. Code must be reasonably segmented.
+4. Code must be self-documenting.
 
-##Specific requirements:
+###Aesthetic
 
-* The project may grow to use one of several databases for the backend, such as MySQL, PostgreSQL, SQLite, or MongoDB.
-* The current table layout is below. Naturally, this mapping can be easily extended.
+1. Product should be simple.
+2. Product should be decent-looking.
+3. Product must be usable by nearly everybody.
 
-<pre>
-Table: torrents
-Column 1: oid, INT
-Column 2: url, TEXT
-Column 3: torrent, TEXT
-Column 4: magnet, TEXT
+###Use Cases
 
-Table: tags
-Column 1: oid, INT
-Column 2: tag, TEXT
+1. User wishes to download a movie/other media, and will be able to search for/find an appropriate magnet
+link on this website. He can then use a client such as BitTorrent to fetch data from multiple people 
+seeding the file, allowing multiple-person sharing.
 
-Table: map
-Column 1: oid, INT
-Column 2: tag, INT
-Column 3: url, INT
-</pre>
+2. User wishes to release his content in a quick fashion, and as such, uses the site to upload a .torrent 
+file, which is then deleted after a magnet link is ripped from it. The user can then use the magnet link 
+as a quick and easy way to share and distribute his content to people, as long as there are seeders.
 
-## Abstract Module API Specification:
+3. User wishes to use an open source system to do his uploading and downloading safely, using a new system
+for login, which uses his favorite torrent to influence the exclusive password system, which salts the 
+password with the torrent's hash.
 
-* Certain sections of webpages (torrent listing page, torrent details page, etc.) can be added to but not modified. For instance, a popularity module would have the ability to append its popularity rating for a torrent on a torrent's details page.
-* SQL tables may be added. Only the tables that belong to the module (read: only the tables that the module and the module alone created) can be modified by the module.
-* Hooks will be provided for yet-to-be-specified functions of *indexer*.
-* A file containing a list of installed modules can be modified by the user to specify which modules have precedence (which one gets access to the hook first, which field on a webpage comes first, etc.) More fine-grained control (individual access ordering: one module gets first pick on webpages but last in SQL access) may eventually be added.
+###Functionality
+
+1. User is able to upload his .torrent file, out of which, a magnet link will be taken, and then the 
+original file deleted. User will also be able to download all the torrent files availible on the site 
+via the aforementioned magnet links, allowing widespread sharing.
+
+2. User is able to upload torrents and share them using seed functionality, allowing the user a fast, 
+efficient way to share his content, be it music, movies, or any other form of media.
+
+3. User is able to search through the many torrents on the site, influenced by a tag system that will 
+aid in finding exactly what the user wants when he inputs his request to the site.

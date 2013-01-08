@@ -5,64 +5,94 @@ require 'bencode'
 require 'base32'
 require 'rack/utils'
 require 'cgi'
-load 'config.ru'
+require 'json'
+require 'bcrypt'
+
+load 'torrentdb.rb'
 load 'functions.rb'
 
-get '/' do
-  erb :index
-end
+use Rack::Session::Cookie, :expire_after => 1000 #expires in 1000 seconds
 
-post '/' do
-  if params['file']
-    @url = build_fn(params['file'][:filename])
-    ext = File.extname(@url)
-    if $allowed_exts.include? ext
-      save_torrent(@url, params['file'][:tempfile])
-      name = get_torrent_name(File.join($pubdir,@url))
-      magnetlink = build_magnet_uri(File.join($pubdir, @url))
-      insert_torrent(@url, name, magnetlink)
-      tags = split_input(params['tags'])
-      add_tags(tags)
-      map_tags_to_torrents(tags, @url)
-      erb :upload
+class Brightswipe < Sinatra::Base
+  get '/' do
+    erb :index
+  end
+
+  post '/signup' do
+    ##Obligatory data validations needed ##
+    user = User.new
+    user.name = params[:user][:name]
+    user.pass_hash = BCrypt::Password.create(params[:user][:password])
+    user.save
+    if user.saved?
+      session[:user_id] = user.id
+      redirect to('/')
     else
-      @error = "Bad file type '#{ext}'"
+      #handle an error in saving
+    end
+  end
+  
+  post '/signin' do
+    user = User.first(:email => params[:login][:email].downcase)
+    if user && user.authenticate(params[:login][:password])
+      session[:user_id] = user.id
+      redirect to('/')
+    else
+      #handle bad login data
+    end
+  end
+
+  get '/signout' do
+    session[:user_id] = nil
+    redirect to('/')
+  end
+
+  post '/upload' do
+    if params['torrent']
+      tempfile = params['torrent'][:tempfile]
+      tempfn   = params['torrent'][:filename]
+      fn = save_torrent tempfn, tempfile
+      if valid_file? fn
+        @name = get_torrent_name fn
+        @magnetlink = build_magnet_uri fn
+        insert_torrent fn, @name, @magnetlink, split_input(params['tags'])
+        FileUtils.rm fn
+        erb :index
+      else
+        @error = "Bad torrent file formatting."
+        FileUtils.rm fn
+        erb :error
+      end
+    else
+      @error = "No file uploaded."
       erb :error
     end
-  else
-    @error = "No file uploaded."
-    erb :error
   end
-end
-
-get '/search' do
-  if params['search']
-    unless params['search'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
-      tags = split_input(params['search'])
-      tag_ids = tag_ids_from_names(tags)
-      @urls = urls_from_tag_ids(tag_ids)
-      erb :list
+  
+  get '/search' do
+    if params['q']
+      unless params['q'].strip.gsub(/\s+/, ' ') =~ /^\s*$/
+        @query = params['q']
+        tags = split_input params['q']
+        @torrents = torrents_from_tags tags
+        erb :list
+      else
+        @error = "Search query was blank."
+        erb :error
+      end
     else
-      @error = "Search query was blank."
+      @error = "No search query parameter passed."
       erb :error
     end
-  else
-    @error = "No search query parameter passed."
-    erb :error
   end
-end
 
-get '/new' do
-  @urls = []
-  latest_torrents.each do |torrent|
-    t = {
-      :name => torrent[0],
-      :url => torrent[1],
-      :magnet => torrent[2],
-      :date => torrent[3]
-    }
-    @urls.push(t)
+  get '/all' do
+    @torrents = Torrent.all :order => :id.desc
+    erb :list
   end
-  @upload_dir = $upload_dir
-  erb :list
+  
+  get '/latest/?:page?' do
+    @torrents = latest_torrents 20, 5, params[:page].to_i
+    erb :list
+  end  
 end

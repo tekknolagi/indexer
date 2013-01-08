@@ -1,4 +1,14 @@
-<title>Uploaded!</title>
-<%= erb :links, :layout => false %>
-<a href='<%= File.join($upload_dir, @url) %>'><%= @url %></a>
-<%= erb :footer, :layout => false %>
+<div class="up-cont">
+  <button id="up-switch"><img src="/img/upload-icon.png" alt="" />Upload</button>
+  <div id="up-modal">
+    <h1>Upload a new torrent</h1>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+      <label for="torrent">Torrent File:</label>
+      <input type="file" name="torrent" />
+      <label for="tags">Tags:</label>
+      <input type="text" name="tags" placeholder="e.g: apples, oranges, etc."/>
+      <button type="submit" class="btn-blue">Upload</button>
+    </form>
+    <span class="arrow"><span></span></span>
+  </div>
+</div>

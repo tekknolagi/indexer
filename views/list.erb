@@ -1,17 +1,37 @@
-<title>Search Results</title>
-<%= erb :links, :layout => false %>
-<table>
-<tr><td>torrent</td><td>magnet</td></tr>
-<% if @urls.length > 0 %>
-<% @urls.each {|url| %>
-<tr>
-<td><a href='<%= "#{$upload_dir}/#{url[:url]}" %>'><%= url[:name] %></a></td>
-<td><a href='<%= url[:magnet] %>'>magnet</a></td>
-</tr>
-<% } %>
-<% else %>
-<tr><td>No torrents match.</td></tr>
-<% end %>
-</table>
-<br>
-<%= erb :footer, :layout => false %>
+<%= erb :header, layout => false %>
+
+<%= erb :upload, layout => false %>
+
+<div id="search-list" class="bd">
+  <a href="/"><img src="/img/text-logo.png" class="text-logo" alt="" /></a>
+  <div class="search">
+    <%= erb :nav, layout => false %>
+    <form action="/search" method="/get">
+      <input type="text" name="q" placeholder="<%= @query %>"/><button id="result-search" class="btn-blue">Search</button>
+    </form>
+  </div>
+  <% unless @torrents.empty? %>
+  <ol id="results" class="results">
+    <% @torrents.each {|torrent| %>
+    <li>
+      <div class="actions">
+<!--	<a href="/i/<%= torrent[:url] %>"><button class="btn-torrent"><img src="/img/dl-icon.png" alt="" />Torrent</button></a>-->
+	<a href="/magnet/<%= torrent[:id] %>"><button class="btn-magnet"><img src="/img/magnet-icon.png" alt="" />Magnet</button></a>
+      </div>
+      <div class="name"><%= torrent[:name] %></div>
+      <div class="meta">
+      <span class="downloads"><%= torrent[:downloads] || 0 %> downloads</span>
+<!--	<span class="size">2.3 GB</span> -->
+	<span>&nbsp;|&nbsp;</span>
+	<span class="date">Uploaded on <%= torrent[:created_at].strftime "%A %B %d, %Y" %></span>
+      </div>
+    </li>
+    <% } %>
+  </ol>
+  <% else %>
+  <div><p>No torrents found.</p></div>
+  <% end %>
+</div>
+<div id="overlay"></div>
+
+<%= erb :footer, layout => false %>

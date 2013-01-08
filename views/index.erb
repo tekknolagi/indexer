@@ -1,13 +1,26 @@
-<title>Torrent Index</title>
-<%= erb :links, :layout => false %>
-<form method='POST' action='/' enctype='multipart/form-data'>
-  File: <br><input type='file' name='file' /><br>
-  Tags: <br><input type='text' name='tags' /><br>
-  <input type='submit' value='Upload' />
-<!--<div style="display:inline;height:100%;width:1px;border:1px inset;margin:5px"></div>-->
-</form>
-<hr><br>
-<form method='GET' action='/search'>
-Search by tag: <br><input type='text' name='search' />
-</form>
-<%= erb :footer, :layout => false %>
+<%= erb :header, layout => false %>
+
+<%= erb :upload, layout => false %>
+
+<div id="home" class="bd">
+  <a href="/"><img src="/img/logo.png" class="main-logo" alt="" /></a>
+  <p class="text-public">Public!</p>
+  <div class="search">
+    <%= erb :nav, layout => false %>
+    <form action="/search" method="get">
+      <input type="text" name="q" /><button id="home-search" class="btn-blue">Search</button>
+    </form>
+  <% if @name && @magnetlink %>
+  <ul class="nav">
+    <li>
+      <div class="uploaded">
+        <p><a href="<%= @magnetlink %>/"><%= @name %></a></p>
+      </div>
+    </li>
+  </ul>
+  <% end %>
+  </div>
+</div>
+<div id="overlay"></div>
+
+<%= erb :footer, layout => false %>
