@@ -1,8 +1,8 @@
 require 'bundler/setup'
 
-load 'indexer.rb'
-load 'api.rb'
-load 'magnet.rb'
+require './indexer'
+require './api'
+require './magnet'
 
 run Rack::URLMap.new({
                        "/" => Brightswipe.new,
