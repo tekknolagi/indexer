@@ -22,7 +22,7 @@ def tag_exists?(tag)
 end
 
 def add_tag(tag)
-  return Tag.find_or_create :name => tag
+  return Tag.first_or_new :name => tag
 end
 
 def add_tags(list)

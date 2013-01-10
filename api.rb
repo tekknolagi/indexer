@@ -1,4 +1,8 @@
 class Brightswipe::API < Sinatra::Base
+  configure do
+    set :environment, :development
+  end
+
   get '/' do
     'API index page'
   end
@@ -13,6 +17,10 @@ class Brightswipe::API < Sinatra::Base
   end
 
   get '/search' do
-    torrents_from_tags(split_input params['q'], params['limit']).to_json
+    if params['q']
+      torrents_from_tags(split_input(params['q']), params['limit']).to_json
+    else
+      redirect "/api/latest?limit=#{params['limit']}"
+    end
   end
 end

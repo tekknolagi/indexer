@@ -1,0 +1,22 @@
+<%= erb :header, layout => false %>
+
+<%= erb :upload, layout => false %>
+
+<div id="search-list" class="bd">
+  <a href="/"><img src="/img/text-logo.png" class="text-logo" alt="" /></a>
+  <div class="search">
+    <%= erb :nav, layout => false %>
+    <form action="/search" method="/get">
+      <input type="text" name="q" placeholder="<%= @query %>"/><button id="result-search" class="btn-blue">Search</button>
+    </form>
+  </div>
+  <div class="results" id="results">
+    <p>
+      Brightswipe is a <i>torrent indexer</i>.
+    </p>
+    <p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial 3.0 Unported</a> License. For attribution, please clearly mention my name and my website, <a href="http://bernsteinbear.com" target="_blank">Bernstein Bear</a>.</p>
+  </div>
+</div>
+<div id="overlay"></div>
+
+<%= erb :footer, layout => false %>

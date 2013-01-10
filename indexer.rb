@@ -55,12 +55,17 @@ class Brightswipe < Sinatra::Base
   end
 
   get '/all' do
-    @torrents = Torrent.all
+    @torrents = []
+    @page = 'all'
     erb :list
+  end
+
+  get '/about' do
+    erb :about
   end
   
   get '/latest/?:page?' do
     @torrents = latest_torrents 20, 5, params[:page].to_i
     erb :list
-  end  
+  end
 end
