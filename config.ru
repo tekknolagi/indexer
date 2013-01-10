@@ -1,7 +1,5 @@
 require 'bundler/setup'
 
-$LOAD_PATH.unshift(Dir.getwd)
-
 require './indexer.rb'
 require './api.rb'
 require './magnet.rb'
