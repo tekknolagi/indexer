@@ -7,12 +7,12 @@ require 'rack/utils'
 require 'cgi'
 require 'json'
 
-load './lib/torrentdb.rb'
-load './lib/functions.rb'
+load './torrentdb.rb'
+load './functions.rb'
 
 class Brightswipe < Sinatra::Base
   get '/' do
-    erb :"../index"
+    erb :index
   end
   
   post '/upload' do
@@ -25,7 +25,7 @@ class Brightswipe < Sinatra::Base
         @magnetlink = build_magnet_uri fn
         insert_torrent fn, @name, @magnetlink, split_input(params[:tags])
         FileUtils.rm fn
-        erb :"../index"
+        erb :index
       else
         @error = "Bad torrent file formatting."
         FileUtils.rm fn
@@ -33,7 +33,7 @@ class Brightswipe < Sinatra::Base
       end
     else
       @error = "No file uploaded."
-      erb :"../error"
+      erb :error
     end
   end
   
@@ -46,27 +46,27 @@ class Brightswipe < Sinatra::Base
         erb :"../list"
       else
         @error = "Search query was blank."
-        erb :"../error"
+        erb :error
       end
     else
       @error = "No search query parameter passed."
-      erb :"../error"
+      erb :error
     end
   end
 
   get '/all' do
     @torrents = []
     @page = 'all'
-    erb :"../list"
+    erb :list
   end
 
   get '/about' do
-    erb :"../about"
+    erb :about
   end
   
   get '/latest/?:page?' do
     @torrents = []
     @page = 'latest'
-    erb :"../list"
+    erb :list
   end
 end

@@ -1,8 +1,8 @@
 require 'bundler/setup'
 
-require './lib/indexer.rb'
-require './lib/api.rb'
-require './lib/magnet.rb'
+require './indexer.rb'
+require './api.rb'
+require './magnet.rb'
 
 configure do
   set :environment, :development
