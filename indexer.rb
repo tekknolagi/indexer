@@ -29,11 +29,11 @@ class Brightswipe < Sinatra::Base
       else
         @error = "Bad torrent file formatting."
         FileUtils.rm fn
-        erb :"../error"
+        erb :text
       end
     else
       @error = "No file uploaded."
-      erb :error
+      erb :text
     end
   end
   
@@ -43,14 +43,14 @@ class Brightswipe < Sinatra::Base
         @query = params[:q]
         tags = split_input params[:q]
         @torrents = torrents_from_tags tags
-        erb :"../list"
+        erb :list
       else
         @error = "Search query was blank."
-        erb :error
+        erb :text
       end
     else
       @error = "No search query parameter passed."
-      erb :error
+      erb :text
     end
   end
 
@@ -61,7 +61,8 @@ class Brightswipe < Sinatra::Base
   end
 
   get '/about' do
-    erb :about
+    @about = erb :about, layout => false
+    erb :text
   end
   
   get '/latest/?:page?' do
@@ -70,3 +71,8 @@ class Brightswipe < Sinatra::Base
     erb :list
   end
 end
+
+__END__
+@@ about
+<p>Brightswipe is a <i>torrent indexer</i>.</p>
+<p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial 3.0 Unported</a> License. For attribution, please clearly mention my name and my website, <a href="http://bernsteinbear.com" target="_blank">Bernstein Bear</a>.</p>
