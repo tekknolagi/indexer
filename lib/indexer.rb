@@ -12,7 +12,7 @@ load './lib/functions.rb'
 
 class Brightswipe < Sinatra::Base
   get '/' do
-    erb "../index"
+    erb :"../index"
   end
   
   post '/upload' do
