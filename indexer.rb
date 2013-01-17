@@ -27,12 +27,14 @@ class Brightswipe < Sinatra::Base
         FileUtils.rm fn
         erb :index
       else
-        @error = "Bad torrent file formatting."
+        @error = true
+        @text = "Bad torrent file formatting."
         FileUtils.rm fn
         erb :text
       end
     else
-      @error = "No file uploaded."
+      @error = true
+      @text = "No file uploaded."
       erb :text
     end
   end
@@ -45,11 +47,13 @@ class Brightswipe < Sinatra::Base
         @torrents = torrents_from_tags tags
         erb :list
       else
-        @error = "Search query was blank."
+        @error = true
+        @text = "Search query was blank."
         erb :text
       end
     else
-      @error = "No search query parameter passed."
+      @error = true
+      @text = "No search query parameter passed."
       erb :text
     end
   end
@@ -61,7 +65,7 @@ class Brightswipe < Sinatra::Base
   end
 
   get '/about' do
-    @about = erb :about, layout => false
+    @text = 'Brightswipe is a <i>torrent indexer</i>.</p><p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial 3.0 Unported</a> License. For attribution, please clearly mention my name and my website, <a href="http://bernsteinbear.com" target="_blank">Bernstein Bear</a>.'
     erb :text
   end
   
@@ -71,8 +75,3 @@ class Brightswipe < Sinatra::Base
     erb :list
   end
 end
-
-__END__
-@@ about
-<p>Brightswipe is a <i>torrent indexer</i>.</p>
-<p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial 3.0 Unported</a> License. For attribution, please clearly mention my name and my website, <a href="http://bernsteinbear.com" target="_blank">Bernstein Bear</a>.</p>

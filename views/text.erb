@@ -11,11 +11,14 @@
     </form>
   </div>
   <div class="results" id="results">
-    <% if @about 
-         @about
-       elsif @error
-         @error
-       end %>
+    <p>
+    <%=
+	if @error
+          "<b>Error: </b>#{@text}"
+	else
+	  @text
+        end %>
+    </p>
   </div>
 </div>
 <div id="overlay"></div>
