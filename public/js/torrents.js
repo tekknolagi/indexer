@@ -1,6 +1,7 @@
 $.getJSON("/api/"+$page, function(data) {
-    $.each(data, function(key,val) {
-	$(".results ol").append("<li><div class='actions'><a href='/magnet/"+val["id"]+"'><button class='btn-magnet'><img src='/img/magnet-icon.png' />Magnet</button></a></div>"+"<div class='name'>"+val['name']+"</div>"+"<div class='meta'><span class='downloads'>"+val["downloads"]+"</span><span>&nbsp;|&nbsp;</span><span class='date'>Uploaded on "+new Date(Date.parse(val['created_at'])).toLocaleDateString()+"</span></div></li>");
-	console.log("ELEMENT MADE");
+    console.log(data);
+    $.each(data['contents'], function(key,val) {
+	$(".results ol").append("<li><div class='actions'><a href='/magnet/"+val["id"]+"'><button class='btn-magnet'><img src='/img/magnet-icon.png' />Magnet</button></a></div>"+"<div class='name'>"+val['name']+"</div>"+"<div class='meta'><span class='downloads'>"+val["downloads"]+" downloads</span><span>&nbsp;|&nbsp;</span><span class='date'>Uploaded on "+new Date(Date.parse(val['created_at'])).toLocaleDateString()+"</span></div></li>");
+	console.log("ELEMENT MADE: "+val['name']);
     });
 });
