@@ -2,7 +2,7 @@ require 'data_mapper'
 require 'dm-postgres-adapter'
 require 'dm-pager'
 
-load './lib/dbconfig.rb'
+load './dbconfig.rb'
 
 class Torrent
   include DataMapper::Resource
