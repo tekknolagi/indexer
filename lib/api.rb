@@ -1,4 +1,4 @@
-class Brightswipe::API < Sinatra::Base
+class Brightswipe::API < Brightswipe
   $version = "v0.1"
 
   configure do

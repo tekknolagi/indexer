@@ -1,4 +1,4 @@
-class Brightswipe < Sinatra::Base
+class Brightswipe::Main < Brightswipe
   get '/' do
     erb :index
   end

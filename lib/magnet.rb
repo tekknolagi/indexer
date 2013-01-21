@@ -1,4 +1,4 @@
-class Brightswipe::Magnet < Sinatra::Base
+class Brightswipe::Magnet < Brightswipe
   get '/:id' do
     if params[:id]
       t = get_torrent_by_id params[:id]
