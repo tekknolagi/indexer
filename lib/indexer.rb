@@ -1,15 +1,3 @@
-require 'rubygems'
-require 'sinatra'
-require 'erb'
-require 'bencode'
-require 'base32'
-require 'rack/utils'
-require 'cgi'
-require 'json'
-
-load './dbconfig.rb'
-load './functions.rb'
-
 class Brightswipe < Sinatra::Base
   get '/' do
     erb :index
