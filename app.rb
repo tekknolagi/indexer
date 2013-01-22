@@ -1,4 +1,4 @@
-require 'bundler/setup'
+require "bundler/setup"
 
 require "rubygems"
 require "sinatra"
@@ -9,6 +9,7 @@ require "rack/utils"
 require "cgi"
 require "json"
 require "data_mapper"
+require "extensions/all"
 
 require_relative "helpers/init"
 

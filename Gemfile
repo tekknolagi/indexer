@@ -1,12 +1,14 @@
 source :rubygems
-gem 'sinatra'
-gem 'bencode'
-gem 'base32'
-gem 'rack'
-gem 'bson_ext'
-gem 'bundler'
-gem 'data_mapper'
-gem 'dm-postgres-adapter'
-gem 'dm-pager'
-gem 'json'
-#gem 'torrent-ruby', :git => 'git://github.com/mikhailvs/torrent-ruby.git'
+ruby "1.9.3"
+gem "sinatra"
+gem "bencode"
+gem "base32"
+gem "rack"
+gem "bson_ext"
+gem "bundler"
+gem "data_mapper"
+gem "dm-postgres-adapter"
+gem "dm-pager"
+gem "json"
+gem "extensions"
+#gem "torrent-ruby", :git => "git://github.com/mikhailvs/torrent-ruby.git"
