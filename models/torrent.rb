@@ -12,7 +12,7 @@ class Torrent
 
   has n, :tags, :through => Resource
 
-  def insert(rfile, name, magnet, tags)
+  def self.insert(rfile, name, magnet, tags)
     tag_objs = Tag.add_multiple tags
     hash = get_torrent_hash rfile
     t = first_or_new({:info_hash => hash}, {:name => name, :magnet => magnet, :created_at => Time.now, :info_hash => hash})
@@ -22,15 +22,15 @@ class Torrent
     t.save!
   end
 
-  def latest(limit=50, per_page=10, pagenum=1)
+  def self.latest(limit=50, per_page=10, pagenum=1)
     all(:order => [:created_at.desc], :limit => limit).page(pagenum, :per_page => per_page)
   end
 
-  def sort_by_date(torrents)
+  def self.sort_by_date(torrents)
     torrents.sort_by {|x| x[:created_at]}.reverse
   end
 
-  def rating(t)
+  def self.rating(t)
     #A la Reddit
     t = DateTime.now.to_i - t[:created_at].to_i
     x = t[:downloads]
@@ -49,7 +49,7 @@ class Torrent
     (Math.log10(z.to_f)+y*t.to_f/45000.0).to_i
   end
 
-  def by_id(id)
+  def self.by_id(id)
     first :id => id
   end
 end

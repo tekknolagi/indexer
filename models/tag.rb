@@ -7,15 +7,15 @@ class Tag
 
   has n, :torrents, :through => Resource
 
-  def exists?(tag)
+  def self.exists?(tag)
     count(:name => tag) != 0
   end
 
-  def add(tag)
+  def self.add(tag)
     first_or_new :name => tag
   end
 
-  def add_multiple(list)
+  def self.add_multiple(list)
     objs = []
     list.each {|tag|
       objs.push(add_tag tag)
@@ -23,7 +23,7 @@ class Tag
     objs
   end
   
-  def torrents(tags, limit=20)
+  def self.torrents(tags, limit=20)
     torrents = []
     tags.each {|tag|
       tago = all :name => tag
