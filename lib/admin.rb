@@ -1,9 +1,8 @@
 require 'json'
 require 'net/http'
 require 'uri'
-load 'torrentdb.rb'
 
-class BrightswipeAdmin
+class Brightswipe::Admin < Brightswipe
   def clonedb(url)
     uri = URI.parse "http://#{url}/api/all"
     http = Net::HTTP.new uri.host, uri.port

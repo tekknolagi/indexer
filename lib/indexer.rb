@@ -11,7 +11,7 @@ class Brightswipe::Main < Brightswipe
       if valid_file? fn
         @name = get_torrent_name fn
         @magnetlink = build_magnet_uri fn
-        insert_torrent fn, @name, @magnetlink, split_input(params[:tags])
+        Torrent.insert fn, @name, @magnetlink, split_input(params[:tags])
         FileUtils.rm fn
         erb :index
       else
@@ -28,22 +28,10 @@ class Brightswipe::Main < Brightswipe
   end
   
   get '/search' do
-    if params[:q]
-      unless params[:q].strip.gsub(/\s+/, ' ') =~ /^\s*$/
-        @query = params[:q]
-        tags = split_input params[:q]
-        @torrents = torrents_from_tags tags
-        erb :list
-      else
-        @error = true
-        @text = "Search query was blank."
-        erb :text
-      end
-    else
-      @error = true
-      @text = "No search query parameter passed."
-      erb :text
-    end
+    @query = params[:q]
+    @torrents = []
+    @page = 'search'
+    erb :list
   end
 
   get '/all' do

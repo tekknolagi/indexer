@@ -30,13 +30,13 @@ class Brightswipe::API < Brightswipe
     limit = params[:limit] ? params[:limit].to_i : 20
     page = params[:page] ? params[:page].to_i : 1
 
-    @torrents = latest_torrents limit, 5, page
+    @torrents = Torrent.latest limit, 5, page
     api_wrapper(@torrents)
   end
 
   get '/search' do
     if params[:q]
-      api_wrapper(torrents_from_tags(split_input(params[:q]), params[:limit]))
+      api_wrapper(Tag.torrents(split_input(params[:q]), params[:limit]))
     else
       redirect "/api/latest?limit=#{params[:limit]}"
     end

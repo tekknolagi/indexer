@@ -8,5 +8,5 @@ class User
   property :created_at,   DateTime
 
   has n, :torrents, :through => Resource
-  has 1, :invite, :through => Resource
+  has 2, :invite, :through => Resource
 end

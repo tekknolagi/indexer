@@ -9,7 +9,6 @@ require "rack/utils"
 require "cgi"
 require "json"
 require "data_mapper"
-require "extensions/all"
 
 require_relative "helpers/init"
 
