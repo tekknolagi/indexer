@@ -9,6 +9,8 @@ require "rack/utils"
 require "cgi"
 require "json"
 require "data_mapper"
+require "pry"
+require "ruby_pagination_logic"
 
 require_relative "helpers/init"
 

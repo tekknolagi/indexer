@@ -1,5 +1,5 @@
 class Brightswipe::API < Brightswipe
-  $version = "v0.1"
+  $version = "v0.2"
 
   configure do
     set :environment, :development
@@ -15,7 +15,7 @@ class Brightswipe::API < Brightswipe
   end
 
   def error_page(error_text)
-    api_wrapper({:error => error_text})
+    api_wrapper :error => error_text
   end
 
   get '/' do
@@ -23,20 +23,22 @@ class Brightswipe::API < Brightswipe
   end
 
   get '/all' do
-    api_wrapper(Torrent.all :order => :id.desc)
+    @torrents = Torrent.all :order => :id.desc
+    api_wrapper @torrents
   end
   
   get '/latest' do
     limit = params[:limit] ? params[:limit].to_i : 20
     page = params[:page] ? params[:page].to_i : 1
 
-    @torrents = Torrent.latest limit, 5, page
-    api_wrapper(@torrents)
+    @torrents = Torrent.latest limit, page
+    api_wrapper @torrents
   end
 
   get '/search' do
     if params[:q]
-      api_wrapper(Tag.torrents(split_input(params[:q]), params[:limit]))
+      @torrents = Tag.torrents split_input(params[:q]), params[:limit]
+      api_wrapper @torrents
     else
       redirect "/api/latest?limit=#{params[:limit]}"
     end

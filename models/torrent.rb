@@ -22,8 +22,9 @@ class Torrent
     t.save!
   end
 
-  def self.latest(limit=50, per_page=10, pagenum=1)
-    all(:order => [:created_at.desc], :limit => limit).page(pagenum, :per_page => per_page)
+  def self.latest(limit=50, pagenum=1)
+    offset = RPL::paginate pagenum, 5
+    all :order => [:created_at.desc], :limit => limit, :offset => offset
   end
 
   def self.sort_by_date(torrents)
