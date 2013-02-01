@@ -1,44 +1,19 @@
-def randomize(fn, len=10)
-  a = 0
-  for i in 1..len
-    a *= 10
-    a += rand(9)
-  end
-  return fn+'_'+a.to_s
+def randomize(s, len=10)
+  s += '_'
+  (1..len).each {|i|
+    s += rand(9).to_s
+  }
+  return s
 end
 
 def build_fn(fn)
   ext = File.extname fn
   base = File.basename fn, '.*'
-  return randomize(:fn => base)+ext
+  return randomize(base)+ext
 end
 
 def split_input(input)
   return input.split /[ *,*;*.*\/*]/
-end
-
-def tag_exists?(tag)
-end
-
-def add_tag(tag)
-end
-
-def add_tags(list)
-end
-
-def insert_torrent(rfile, name, magnet, tags)
-end
-
-def latest_torrents(limit=50, per_page=10, pagenum=1)
-end
-
-def torrents_from_tags(tags, limit=20)
-end
-
-def get_torrent_rating(t)
-end
-
-def get_torrent_by_id(id)
 end
 
 def save_torrent(fn, tmp)

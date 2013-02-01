@@ -41,7 +41,7 @@ class Brightswipe::Main < Brightswipe
   end
 
   get '/about' do
-    @text = 'Brightswipe is a <i>torrent indexer</i>.</p><p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US" target="_blank">Creative Commons Attribution-NonCommercial 3.0 Unported</a> License. For attribution, please clearly mention my name and my website, <a href="http://bernsteinbear.com" target="_blank">Bernstein Bear</a>.'
+    @text = erb(:about_partial, :layout => false)
     erb :text
   end
   

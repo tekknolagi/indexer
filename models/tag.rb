@@ -7,10 +7,6 @@ class Tag
 
   has n, :torrents, :through => Resource
 
-  def self.exists?(tag)
-    count(:name => tag) != 0
-  end
-
   def self.add(tag)
     first_or_new :name => tag
   end
@@ -18,7 +14,7 @@ class Tag
   def self.add_multiple(list)
     objs = []
     list.each {|tag|
-      objs.push(add_tag tag)
+      objs.push(add tag)
     }
     objs
   end
